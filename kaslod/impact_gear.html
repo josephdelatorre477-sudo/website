@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaslod Media | Gear</title>
+    <link rel="icon" type="image/jpeg" href="images/kaslod.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap');
+        .gradient-text {
+            background: linear-gradient(45deg, #f97316, #ef4444, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Enhanced Navbar Styles */
+        .navbar-link {
+            position: relative;
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        
+        .navbar-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(239, 68, 68, 0.1));
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .navbar-link:hover::before {
+            opacity: 1;
+        }
+        
+        .navbar-link:hover {
+            transform: translateY(-2px);
+            color: #f97316;
+        }
+        
+        .navbar-link.active {
+            background: linear-gradient(135deg, #f97316, #ef4444);
+            color: white;
+        }
+        
+        .navbar-link.active::before {
+            opacity: 0;
+        }
+        
+        .navbar-link.active:hover {
+            transform: translateY(-2px);
+        }
+        
+        .admin-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+        
+        .logout-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        }
+        
+        .navbar-logo {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .mobile-menu-btn {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(239, 68, 68, 0.1));
+            border: 2px solid rgba(249, 115, 22, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(239, 68, 68, 0.2));
+            border-color: rgba(249, 115, 22, 0.5);
+            transform: scale(1.05);
+        }
+        .gear-card {
+            transition: all 0.3s ease;
+        }
+        .gear-card:hover {
+            transform: translateY(-5px);
+        }
+        /* Gear Modal Styles */
+        .gear-modal {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .gear-modal-content {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .cart-badge {
+            background: linear-gradient(45deg, #f97316, #ef4444);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+        }
+        .quantity-input {
+            background: #374151;
+            border: 1px solid #4b5563;
+            color: white;
+            text-align: center;
+            width: 60px;
+        }
+        .quantity-input:focus {
+            border-color: #f97316;
+            outline: none;
+        }
+        .cart-item {
+            background: linear-gradient(135deg, #374151, #1f2937);
+            border: 1px solid #4b5563;
+            transition: all 0.3s ease;
+        }
+        .cart-item:hover {
+            border-color: #f97316;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-['Montserrat'] overflow-x-hidden">
+    <div id="vanta-bg" class="fixed inset-0 -z-10 opacity-20"></div>
+    
+    <!-- Bagong Navigation -->
+    <nav class="fixed w-full z-50 bg-gray-900/90 backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="kaslod.html" class="flex items-center space-x-2 navbar-logo">
+                        <img src="images/kaslod.jpg" alt="Kaslod Media Logo" class="h-10 w-auto rounded-lg">
+                        <span class="text-2xl font-bold font-['Bebas+Neue'] tracking-wider gradient-text">KASLOD MEDIA</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="kaslod.html" class="navbar-link">Highlights</a>
+                    <a href="impact_athletes.html" class="navbar-link">Athletes</a>
+                    <a href="impact_events.html" class="navbar-link">Events</a>
+                    <a href="impact_gear.html" class="navbar-link active">Gear</a>
+                    <button onclick="openCart()" class="navbar-link">
+                        <i data-feather="shopping-cart" class="w-5 h-5"></i>
+                        <span id="cart-count" class="cart-badge hidden">0</span>
+                    </button>
+                    <a href="admin_login.html" class="admin-btn">
+                        Login
+                    </a>
+                    <button onclick="openSubmitModal()" class="navbar-link">
+                        Submit Clip
+                    </button>
+                </div>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 mobile-menu-btn">
+                    <i data-feather="menu"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-7xl font-bold font-['Bebas+Neue'] tracking-wide mb-6">
+                    <span class="gradient-text">ESSENTIAL</span><br>
+                    <span class="text-white">GEAR</span>
+                </h1>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Get equipped with the best downhill skateboarding gear trusted by professionals worldwide.
+                </p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex justify-center space-x-4 mb-12 flex-wrap gap-2">
+                <button onclick="filterGear('all')" class="gear-filter-btn active px-6 py-2 rounded-md bg-orange-500 text-white font-medium transition">
+                    All Gear
+                </button>
+                <button onclick="filterGear('boards')" class="gear-filter-btn px-6 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium transition">
+                    Boards
+                </button>
+                <button onclick="filterGear('wheels')" class="gear-filter-btn px-6 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium transition">
+                    Wheels
+                </button>
+                <button onclick="filterGear('safety')" class="gear-filter-btn px-6 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium transition">
+                    Safety
+                </button>
+                <button onclick="filterGear('accessories')" class="gear-filter-btn px-6 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium transition">
+                    Accessories
+                </button>
+            </div>
+
+            <!-- Gear Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="gearGrid">
+                <!-- Gear Item 1 -->
+                <div class="gear-card bg-gray-800 rounded-xl overflow-hidden" data-category="boards">
+                    <div class="relative h-64 bg-gray-700 flex items-center justify-center">
+                        <i data-feather="box" class="w-20 h-20 text-orange-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-orange-400 font-semibold">BOARDS</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2">Speedster Pro Deck</h3>
+                        <p class="text-gray-400 text-sm mb-4">Professional downhill deck with carbon fiber reinforcement</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-orange-400">$349</span>
+                            <div class="flex items-center">
+                                <i data-feather="star" class="w-4 h-4 text-yellow-400 fill-current"></i>
+                                <span class="ml-1 text-sm">4.8</span>
+                            </div>
+                        </div>
+                        <button onclick="viewGearDetails('Speedster Pro Deck')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gear Item 2 -->
+                <div class="gear-card bg-gray-800 rounded-xl overflow-hidden" data-category="wheels">
+                    <div class="relative h-64 bg-gray-700 flex items-center justify-center">
+                        <i data-feather="disc" class="w-20 h-20 text-pink-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-pink-400 font-semibold">WHEELS</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2">Grip Master 70mm</h3>
+                        <p class="text-gray-400 text-sm mb-4">High-grip urethane wheels for ultimate control</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-pink-400">$89</span>
+                            <div class="flex items-center">
+                                <i data-feather="star" class="w-4 h-4 text-yellow-400 fill-current"></i>
+                                <span class="ml-1 text-sm">4.9</span>
+                            </div>
+                        </div>
+                        <button onclick="viewGearDetails('Grip Master 70mm')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gear Item 3 -->
+                <div class="gear-card bg-gray-800 rounded-xl overflow-hidden" data-category="safety">
+                    <div class="relative h-64 bg-gray-700 flex items-center justify-center">
+                        <i data-feather="shield" class="w-20 h-20 text-green-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-green-400 font-semibold">SAFETY</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2">Impact Pro Helmet</h3>
+                        <p class="text-gray-400 text-sm mb-4">Full-face helmet with advanced impact protection</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-green-400">$249</span>
+                            <div class="flex items-center">
+                                <i data-feather="star" class="w-4 h-4 text-yellow-400 fill-current"></i>
+                                <span class="ml-1 text-sm">5.0</span>
+                            </div>
+                        </div>
+                        <button onclick="viewGearDetails('Impact Pro Helmet')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gear Item 4 -->
+                <div class="gear-card bg-gray-800 rounded-xl overflow-hidden" data-category="safety">
+                    <div class="relative h-64 bg-gray-700 flex items-center justify-center">
+                        <i data-feather="user-check" class="w-20 h-20 text-blue-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-blue-400 font-semibold">SAFETY</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2">Slide Gloves Elite</h3>
+                        <p class="text-gray-400 text-sm mb-4">Premium leather gloves with replaceable pucks</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-400">$79</span>
+                            <div class="flex items-center">
+                                <i data-feather="star" class="w-4 h-4 text-yellow-400 fill-current"></i>
+                                <span class="ml-1 text-sm">4.7</span>
+                            </div>
+                        </div>
+                        <button onclick="viewGearDetails('Slide Gloves Elite')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gear Item 5 -->
+                <div class="gear-card bg-gray-800 rounded-xl overflow-hidden" data-category="boards">
+                    <div class="relative h-64 bg-gray-700 flex items-center justify-center">
+                        <i data-feather="box" class="w-20 h-20 text-orange-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-orange-400 font-semibold">BOARDS</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2">Alpine Bomber DH</h3>
+                        <p class="text-gray-400 text-sm mb-4">Stiff drop-through deck for high-speed stability</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-orange-400">$299</span>
+                            <div class="flex items-center">
+                                <i data-feather="star" class="w-4 h-4 text-yellow-400 fill-current"></i>
+                                <span class="ml-1 text-sm">4.6</span>
+                            </div>
+                        </div>
+                        <button onclick="viewGearDetails('Alpine Bomber DH')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gear Item 6 -->
+                <div class="gear-card bg-gray-800 rounded-xl overflow-hidden" data-category="wheels">
+                    <div class="relative h-64 bg-gray-700 flex items-center justify-center">
+                        <i data-feather="disc" class="w-20 h-20 text-pink-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-pink-400 font-semibold">WHEELS</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2">Speed Demon 75mm</h3>
+                        <p class="text-gray-400 text-sm mb-4">Large contact patch for maximum speed</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-pink-400">$95</span>
+                            <div class="flex items-center">
+                                <i data-feather="star" class="w-4 h-4 text-yellow-400 fill-current"></i>
+                                <span class="ml-1 text-sm">4.8</span>
+                            </div>
+                        </div>
+                        <button onclick="viewGearDetails('Speed Demon 75mm')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gear Item 7 -->
+                <div class="gear-card bg-gray-800 rounded-xl overflow-hidden" data-category="accessories">
+                    <div class="relative h-64 bg-gray-700 flex items-center justify-center">
+                        <i data-feather="tool" class="w-20 h-20 text-purple-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-purple-400 font-semibold">ACCESSORIES</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2">Precision Bearings Set</h3>
+                        <p class="text-gray-400 text-sm mb-4">ABEC-9 rated for maximum speed and smoothness</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-purple-400">$45</span>
+                            <div class="flex items-center">
+                                <i data-feather="star" class="w-4 h-4 text-yellow-400 fill-current"></i>
+                                <span class="ml-1 text-sm">4.9</span>
+                            </div>
+                        </div>
+                        <button onclick="viewGearDetails('Precision Bearings Set')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gear Item 8 -->
+                <div class="gear-card bg-gray-800 rounded-xl overflow-hidden" data-category="accessories">
+                    <div class="relative h-64 bg-gray-700 flex items-center justify-center">
+                        <i data-feather="watch" class="w-20 h-20 text-cyan-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-cyan-400 font-semibold">ACCESSORIES</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2">GPS Speed Tracker</h3>
+                        <p class="text-gray-400 text-sm mb-4">Track your speed, distance, and performance data</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-cyan-400">$129</span>
+                            <div class="flex items-center">
+                                <i data-feather="star" class="w-4 h-4 text-yellow-400 fill-current"></i>
+                                <span class="ml-1 text-sm">4.6</span>
+                            </div>
+                        </div>
+                        <button onclick="viewGearDetails('GPS Speed Tracker')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gear Details Modal -->
+    <div id="gearModal" class="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 hidden items-center justify-center p-4 gear-modal" onclick="closeGearModal(event)">
+        <div class="gear-modal-content relative w-full max-w-4xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <button onclick="closeGearModal()" class="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors z-10">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                <!-- Gear Header -->
+                <div id="gear-header" class="relative h-80 bg-gradient-to-br from-orange-500/20 to-pink-500/20">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <span id="gear-category-badge" class="bg-orange-500 text-xs px-3 py-1 rounded-full font-bold inline-block mb-4">BOARDS</span>
+                        <h2 id="gear-title" class="text-4xl font-bold font-['Bebas+Neue'] mb-2"></h2>
+                        <div class="flex items-center space-x-6 text-gray-300">
+                            <div class="flex items-center">
+                                <i data-feather="star" class="w-5 h-5 mr-2 text-yellow-400"></i>
+                                <span id="gear-rating"></span>
+                            </div>
+                            <div class="flex items-center">
+                                <i data-feather="tag" class="w-5 h-5 mr-2 text-orange-400"></i>
+                                <span id="gear-price"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gear Content -->
+                <div class="p-8">
+                    <!-- Description -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">PRODUCT DETAILS</h3>
+                        <p id="gear-description" class="text-gray-300 leading-relaxed mb-6"></p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-gray-700/50 rounded-lg p-4">
+                                <h4 class="font-bold text-orange-400 mb-2">Specifications</h4>
+                                <ul id="gear-specs" class="text-gray-300 text-sm space-y-1">
+                                    <!-- Specifications will be populated here -->
+                                </ul>
+                            </div>
+                            <div class="bg-gray-700/50 rounded-lg p-4">
+                                <h4 class="font-bold text-orange-400 mb-2">Features</h4>
+                                <ul id="gear-features" class="text-gray-300 text-sm space-y-1">
+                                    <!-- Features will be populated here -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Purchase Section -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">ORDER NOW</h3>
+                        <div class="bg-gray-700/50 rounded-lg p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-gray-300">Quantity</span>
+                                <div class="flex items-center space-x-2">
+                                    <button onclick="decreaseQuantity()" class="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded-md">-</button>
+                                    <input type="number" id="quantity" value="1" min="1" max="10" class="quantity-input rounded-md px-2 py-1">
+                                    <button onclick="increaseQuantity()" class="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded-md">+</button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-gray-300">Total Price</span>
+                                <span id="total-price" class="text-2xl font-bold text-orange-400"></span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button onclick="addToCart()" class="flex-1 bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-md font-medium transition transform hover:scale-105">
+                                    Add to Cart
+                                </button>
+                                <button onclick="buyNow()" class="flex-1 bg-green-500 hover:bg-green-600 px-6 py-3 rounded-md font-medium transition transform hover:scale-105">
+                                    Buy Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 hidden items-center justify-center p-4 gear-modal" onclick="closeCart(event)">
+        <div class="gear-modal-content relative w-full max-w-4xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <button onclick="closeCart()" class="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors z-10">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                <!-- Cart Header -->
+                <div class="bg-gradient-to-r from-orange-500/20 to-pink-500/20 p-6">
+                    <h2 class="text-3xl font-bold font-['Bebas+Neue'] gradient-text">SHOPPING CART</h2>
+                    <p class="text-gray-300">Review your items before checkout</p>
+                </div>
+
+                <!-- Cart Content -->
+                <div class="p-6">
+                    <div id="cart-items" class="space-y-4 mb-6">
+                        <!-- Cart items will be populated here -->
+                    </div>
+
+                    <!-- Cart Summary -->
+                    <div class="bg-gray-700/50 rounded-lg p-6 mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-300">Subtotal</span>
+                            <span id="cart-subtotal" class="text-xl font-bold text-orange-400">$0</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-300">Shipping</span>
+                            <span id="cart-shipping" class="text-xl font-bold text-orange-400">$15</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-gray-300">Total</span>
+                            <span id="cart-total" class="text-2xl font-bold text-orange-400">$15</span>
+                        </div>
+                        <button onclick="proceedToCheckout()" class="w-full bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-md font-medium transition transform hover:scale-105">
+                            Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Form Modal -->
+    <div id="orderModal" class="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 hidden items-center justify-center p-4 gear-modal" onclick="closeOrderModal(event)">
+        <div class="gear-modal-content relative w-full max-w-3xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <button onclick="closeOrderModal()" class="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors z-10">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                <!-- Order Header -->
+                <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 p-6">
+                    <h2 class="text-3xl font-bold font-['Bebas+Neue'] gradient-text">PLACE YOUR ORDER</h2>
+                    <p class="text-gray-300">Complete your purchase with secure checkout</p>
+                </div>
+
+                <!-- Order Form -->
+                <div class="p-6">
+                    <form id="order-form" onsubmit="handleOrder(event)" class="space-y-6">
+                        <!-- Personal Information -->
+                        <div>
+                            <h3 class="text-xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">PERSONAL INFORMATION</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Full Name</label>
+                                    <input type="text" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Email</label>
+                                    <input type="email" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Phone Number</label>
+                                    <input type="tel" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Country</label>
+                                    <select required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                        <option value="">Select Country</option>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="FR">France</option>
+                                        <option value="JP">Japan</option>
+                                        <option value="PH">Philippines</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <div>
+                            <h3 class="text-xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">SHIPPING ADDRESS</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Street Address</label>
+                                    <input type="text" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">City</label>
+                                        <input type="text" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">State/Province</label>
+                                        <input type="text" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">ZIP/Postal Code</label>
+                                        <input type="text" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div>
+                            <h3 class="text-xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">PAYMENT METHOD</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Payment Method</label>
+                                    <select required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                        <option value="">Select Payment Method</option>
+                                        <option value="card">Credit/Debit Card</option>
+                                        <option value="paypal">PayPal</option>
+                                        <option value="bank">Bank Transfer</option>
+                                        <option value="cod">Cash on Delivery</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Special Instructions (Optional)</label>
+                                    <textarea rows="3" class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Any special delivery instructions..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Order Summary -->
+                        <div>
+                            <h3 class="text-xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">ORDER SUMMARY</h3>
+                            <div id="order-summary" class="bg-gray-700/50 rounded-lg p-4">
+                                <!-- Order summary will be populated here -->
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 px-6 py-3 rounded-md font-medium transition transform hover:scale-105">
+                            Place Order
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Modal -->
+    <div id="submitModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-xl max-w-md w-full p-8 relative">
+            <button onclick="closeSubmitModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-feather="x"></i>
+            </button>
+            <h2 class="text-3xl font-bold font-['Bebas+Neue'] gradient-text mb-4">Submit Your Clip</h2>
+            <form onsubmit="handleSubmitClip(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Clip Title</label>
+                    <input type="text" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Video URL</label>
+                    <input type="url" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Location</label>
+                    <input type="text" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Description</label>
+                    <textarea rows="3" required class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 py-3 rounded-md font-medium transition">
+                    Submit Clip
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800/50 border-t border-gray-700 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-gray-500 text-sm">© 2023 ShredHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========================================
+        // ADMIN LOGIN SESSION CHECK
+        // ========================================
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('impactZoneAdminLoggedIn');
+            if (isLoggedIn === 'true') {
+                // Update navbar to show admin state
+                updateNavbarForAdmin();
+            }
+        }
+
+        function updateNavbarForAdmin() {
+            const loginBtn = document.querySelector('a[href="admin_login.html"]');
+            if (loginBtn) {
+                loginBtn.textContent = 'Admin Dashboard';
+                loginBtn.href = 'admin_dashboard.html';
+                loginBtn.className = 'admin-btn';
+                
+                // Add logout button
+                const logoutBtn = document.createElement('button');
+                logoutBtn.textContent = 'Logout';
+                logoutBtn.className = 'logout-btn';
+                logoutBtn.onclick = logout;
+                
+                loginBtn.parentNode.insertBefore(logoutBtn, loginBtn.nextSibling);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('impactZoneAdminLoggedIn');
+            localStorage.removeItem('impactZoneAdminUser');
+            window.location.reload();
+        }
+
+        // ========================================
+        // COMPREHENSIVE GEAR DATA STRUCTURE
+        // ========================================
+        const gearData = {
+            'Speedster Pro Deck': {
+                id: 'speedster-pro-deck',
+                category: 'BOARDS',
+                categoryColor: 'orange',
+                title: 'Speedster Pro Deck',
+                price: 349,
+                rating: '4.8',
+                description: 'The Speedster Pro Deck is engineered for professional downhill skateboarding with carbon fiber reinforcement and precision-cut concave. This deck offers unmatched stability at high speeds while maintaining responsive control for technical maneuvers.',
+                specifications: [
+                    'Length: 42 inches',
+                    'Width: 10 inches',
+                    'Wheelbase: 30 inches',
+                    'Material: 7-ply maple with carbon fiber',
+                    'Weight: 2.8 lbs',
+                    'Concave: Progressive 0.75"'
+                ],
+                features: [
+                    'Carbon fiber reinforcement for maximum stiffness',
+                    'Progressive concave for optimal foot placement',
+                    'Precision-cut wheel wells',
+                    'Professional-grade grip tape included',
+                    'Compatible with all downhill trucks',
+                    '2-year manufacturer warranty'
+                ],
+                image: 'http://static.photos/sport/1024x576/23',
+                stock: 15
+            },
+            'Grip Master 70mm': {
+                id: 'grip-master-70mm',
+                category: 'WHEELS',
+                categoryColor: 'pink',
+                title: 'Grip Master 70mm',
+                price: 89,
+                rating: '4.9',
+                description: 'High-performance urethane wheels designed for maximum grip and control. The Grip Master series features our proprietary compound that provides exceptional traction on various surfaces while maintaining durability.',
+                specifications: [
+                    'Diameter: 70mm',
+                    'Contact patch: 50mm',
+                    'Durometer: 78a',
+                    'Core: Precision-machined aluminum',
+                    'Weight: 85g per wheel',
+                    'Color: Black with orange core'
+                ],
+                features: [
+                    'Proprietary high-grip urethane compound',
+                    'Precision-machined aluminum core',
+                    'Optimized contact patch for maximum grip',
+                    'Heat-resistant formula',
+                    'Compatible with all standard bearings',
+                    'Professional racing tested'
+                ],
+                image: 'http://static.photos/sport/1024x576/24',
+                stock: 25
+            },
+            'Impact Pro Helmet': {
+                id: 'impact-pro-helmet',
+                category: 'SAFETY',
+                categoryColor: 'green',
+                title: 'Impact Pro Helmet',
+                price: 249,
+                rating: '5.0',
+                description: 'Full-face helmet with advanced impact protection technology. The Impact Pro features multi-density EPS foam, carbon fiber shell, and integrated ventilation system for maximum protection and comfort during long rides.',
+                specifications: [
+                    'Shell: Carbon fiber composite',
+                    'Liner: Multi-density EPS foam',
+                    'Weight: 2.2 lbs',
+                    'Certification: DOT, ECE, Snell M2020',
+                    'Ventilation: 15 intake vents',
+                    'Visor: Anti-fog, UV protection'
+                ],
+                features: [
+                    'Advanced impact absorption system',
+                    'Carbon fiber shell for lightweight protection',
+                    'Integrated ventilation system',
+                    'Removable and washable liner',
+                    'Anti-fog visor with UV protection',
+                    'Adjustable chin strap with quick-release'
+                ],
+                image: 'http://static.photos/sport/1024x576/25',
+                stock: 12
+            },
+            'Slide Gloves Elite': {
+                id: 'slide-gloves-elite',
+                category: 'SAFETY',
+                categoryColor: 'blue',
+                title: 'Slide Gloves Elite',
+                price: 79,
+                rating: '4.7',
+                description: 'Premium leather slide gloves with replaceable pucks. The Elite series offers superior protection and control with ergonomic design and high-quality materials for professional downhill skateboarding.',
+                specifications: [
+                    'Material: Premium cowhide leather',
+                    'Pucks: Replaceable HDPE plastic',
+                    'Padding: EVA foam protection',
+                    'Closure: Velcro wrist strap',
+                    'Sizes: S, M, L, XL',
+                    'Weight: 8oz per pair'
+                ],
+                features: [
+                    'Premium cowhide leather construction',
+                    'Replaceable slide pucks',
+                    'EVA foam padding for impact protection',
+                    'Ergonomic finger design',
+                    'Reinforced palm area',
+                    'Machine washable'
+                ],
+                image: 'http://static.photos/sport/1024x576/26',
+                stock: 20
+            },
+            'Alpine Bomber DH': {
+                id: 'alpine-bomber-dh',
+                category: 'BOARDS',
+                categoryColor: 'orange',
+                title: 'Alpine Bomber DH',
+                price: 299,
+                rating: '4.6',
+                description: 'Stiff drop-through deck designed for high-speed stability and control. The Alpine Bomber features a low center of gravity and optimized wheelbase for maximum stability at extreme speeds.',
+                specifications: [
+                    'Length: 40 inches',
+                    'Width: 9.5 inches',
+                    'Wheelbase: 28 inches',
+                    'Material: 8-ply maple',
+                    'Weight: 3.2 lbs',
+                    'Drop: 0.5 inches'
+                ],
+                features: [
+                    'Drop-through truck mounting',
+                    'Low center of gravity design',
+                    'Optimized wheelbase for stability',
+                    'Reinforced truck mounting areas',
+                    'Professional-grade grip tape',
+                    'Compatible with all wheel sizes'
+                ],
+                image: 'http://static.photos/sport/1024x576/27',
+                stock: 18
+            },
+            'Speed Demon 75mm': {
+                id: 'speed-demon-75mm',
+                category: 'WHEELS',
+                categoryColor: 'pink',
+                title: 'Speed Demon 75mm',
+                price: 95,
+                rating: '4.8',
+                description: 'Large contact patch wheels designed for maximum speed and smoothness. The Speed Demon series features our fastest compound with optimized core design for professional racing applications.',
+                specifications: [
+                    'Diameter: 75mm',
+                    'Contact patch: 55mm',
+                    'Durometer: 80a',
+                    'Core: Precision-machined aluminum',
+                    'Weight: 95g per wheel',
+                    'Color: White with blue core'
+                ],
+                features: [
+                    'High-speed urethane compound',
+                    'Large contact patch for stability',
+                    'Precision-machined aluminum core',
+                    'Optimized for maximum speed',
+                    'Professional racing tested',
+                    'Compatible with all bearings'
+                ],
+                image: 'http://static.photos/sport/1024x576/28',
+                stock: 22
+            },
+            'Precision Bearings Set': {
+                id: 'precision-bearings-set',
+                category: 'ACCESSORIES',
+                categoryColor: 'purple',
+                title: 'Precision Bearings Set',
+                price: 45,
+                rating: '4.9',
+                description: 'ABEC-9 rated precision bearings for maximum speed and smoothness. Each set includes 8 bearings with precision-machined races and high-quality steel balls for professional performance.',
+                specifications: [
+                    'Rating: ABEC-9',
+                    'Material: Chrome steel',
+                    'Quantity: 8 bearings',
+                    'Size: 608 (8mm bore)',
+                    'Weight: 12g per bearing',
+                    'Lubrication: High-speed grease'
+                ],
+                features: [
+                    'ABEC-9 precision rating',
+                    'Chrome steel construction',
+                    'High-speed grease lubrication',
+                    'Precision-machined races',
+                    'Professional performance',
+                    'Long-lasting durability'
+                ],
+                image: 'http://static.photos/sport/1024x576/29',
+                stock: 50
+            },
+            'GPS Speed Tracker': {
+                id: 'gps-speed-tracker',
+                category: 'ACCESSORIES',
+                categoryColor: 'cyan',
+                title: 'GPS Speed Tracker',
+                price: 129,
+                rating: '4.6',
+                description: 'Advanced GPS speed tracker with comprehensive performance monitoring. Track your speed, distance, route, and performance data with precision GPS technology and long-lasting battery life.',
+                specifications: [
+                    'GPS: High-precision GPS',
+                    'Battery: 12-hour continuous use',
+                    'Display: OLED screen',
+                    'Water resistance: IPX7',
+                    'Weight: 45g',
+                    'Mounting: Universal bracket'
+                ],
+                features: [
+                    'High-precision GPS tracking',
+                    'Real-time speed display',
+                    'Route recording and playback',
+                    'Performance analytics',
+                    'Water-resistant design',
+                    'Long-lasting battery life'
+                ],
+                image: 'http://static.photos/sport/1024x576/30',
+                stock: 8
+            }
+        };
+
+        // ========================================
+        // SHOPPING CART SYSTEM
+        // ========================================
+        let cart = JSON.parse(localStorage.getItem('impactZoneCart')) || [];
+        let currentGear = null;
+
+        function updateCartCount() {
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartBadge = document.getElementById('cart-count');
+            if (cartCount > 0) {
+                cartBadge.textContent = cartCount;
+                cartBadge.classList.remove('hidden');
+            } else {
+                cartBadge.classList.add('hidden');
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem('impactZoneCart', JSON.stringify(cart));
+        }
+
+        // ========================================
+        // GEAR MODAL FUNCTIONS
+        // ========================================
+        function viewGearDetails(gearName) {
+            const gear = gearData[gearName];
+            if (!gear) {
+                console.error('Gear not found:', gearName);
+                return;
+            }
+
+            currentGear = gear;
+            populateGearModal(gear);
+            
+            const modal = document.getElementById('gearModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => feather.replace(), 100);
+        }
+
+        function populateGearModal(gear) {
+            // Basic info
+            document.getElementById('gear-category-badge').textContent = gear.category;
+            document.getElementById('gear-category-badge').className = `bg-${gear.categoryColor}-500 text-xs px-3 py-1 rounded-full font-bold inline-block mb-4`;
+            document.getElementById('gear-title').textContent = gear.title;
+            document.getElementById('gear-rating').textContent = gear.rating;
+            document.getElementById('gear-price').textContent = `$${gear.price}`;
+            document.getElementById('gear-description').textContent = gear.description;
+
+            // Specifications
+            const specsContainer = document.getElementById('gear-specs');
+            specsContainer.innerHTML = gear.specifications.map(spec => `
+                <li class="flex items-center">
+                    <i data-feather="check" class="w-4 h-4 mr-2 text-orange-400"></i>
+                    ${spec}
+                </li>
+            `).join('');
+
+            // Features
+            const featuresContainer = document.getElementById('gear-features');
+            featuresContainer.innerHTML = gear.features.map(feature => `
+                <li class="flex items-center">
+                    <i data-feather="star" class="w-4 h-4 mr-2 text-orange-400"></i>
+                    ${feature}
+                </li>
+            `).join('');
+
+            // Update total price
+            updateTotalPrice();
+        }
+
+        function updateTotalPrice() {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const totalPrice = currentGear.price * quantity;
+            document.getElementById('total-price').textContent = `$${totalPrice}`;
+        }
+
+        function increaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            const currentValue = parseInt(quantityInput.value);
+            if (currentValue < 10) {
+                quantityInput.value = currentValue + 1;
+                updateTotalPrice();
+            }
+        }
+
+        function decreaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            const currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+                updateTotalPrice();
+            }
+        }
+
+        function addToCart() {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const existingItem = cart.find(item => item.id === currentGear.id);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: currentGear.id,
+                    name: currentGear.title,
+                    price: currentGear.price,
+                    quantity: quantity,
+                    category: currentGear.category
+                });
+            }
+            
+            saveCart();
+            updateCartCount();
+            closeGearModal();
+            
+            // Show success message
+            showNotification('Item added to cart!', 'success');
+        }
+
+        function buyNow() {
+            addToCart();
+            openCart();
+        }
+
+        function closeGearModal(event) {
+            if (event && event.target !== event.currentTarget && !event.target.closest('button[onclick*="closeGearModal"]')) {
+                return;
+            }
+            
+            const modal = document.getElementById('gearModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+            currentGear = null;
+        }
+
+        // ========================================
+        // CART FUNCTIONS
+        // ========================================
+        function openCart() {
+            populateCart();
+            const modal = document.getElementById('cartModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => feather.replace(), 100);
+        }
+
+        function populateCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-8">
+                        <i data-feather="shopping-cart" class="w-16 h-16 text-gray-500 mx-auto mb-4"></i>
+                        <p class="text-gray-400">Your cart is empty</p>
+                    </div>
+                `;
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="cart-item rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 h-16 bg-gray-600 rounded-lg flex items-center justify-center">
+                                    <i data-feather="package" class="w-8 h-8 text-gray-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">${item.name}</h4>
+                                    <p class="text-sm text-gray-400">${item.category}</p>
+                                    <p class="text-orange-400 font-bold">$${item.price}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})" class="bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded">-</button>
+                                <span class="px-3 py-1 bg-gray-700 rounded">${item.quantity}</span>
+                                <button onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})" class="bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded">+</button>
+                                <button onclick="removeFromCart('${item.id}')" class="text-red-400 hover:text-red-300 ml-4">
+                                    <i data-feather="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            updateCartTotals();
+        }
+
+        function updateCartQuantity(itemId, newQuantity) {
+            if (newQuantity <= 0) {
+                removeFromCart(itemId);
+                return;
+            }
+            
+            const item = cart.find(item => item.id === itemId);
+            if (item) {
+                item.quantity = newQuantity;
+                saveCart();
+                updateCartCount();
+                populateCart();
+            }
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            saveCart();
+            updateCartCount();
+            populateCart();
+        }
+
+        function updateCartTotals() {
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const shipping = subtotal > 0 ? 15 : 0;
+            const total = subtotal + shipping;
+            
+            document.getElementById('cart-subtotal').textContent = `$${subtotal}`;
+            document.getElementById('cart-shipping').textContent = `$${shipping}`;
+            document.getElementById('cart-total').textContent = `$${total}`;
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!', 'error');
+                return;
+            }
+            
+            closeCart();
+            openOrderModal();
+        }
+
+        function closeCart(event) {
+            if (event && event.target !== event.currentTarget && !event.target.closest('button[onclick*="closeCart"]')) {
+                return;
+            }
+            
+            const modal = document.getElementById('cartModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ========================================
+        // ORDER FUNCTIONS
+        // ========================================
+        function openOrderModal() {
+            populateOrderSummary();
+            const modal = document.getElementById('orderModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => feather.replace(), 100);
+        }
+
+        function populateOrderSummary() {
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const shipping = 15;
+            const total = subtotal + shipping;
+            
+            const orderSummary = document.getElementById('order-summary');
+            orderSummary.innerHTML = `
+                <div class="space-y-2">
+                    ${cart.map(item => `
+                        <div class="flex justify-between">
+                            <span>${item.name} x${item.quantity}</span>
+                            <span>$${item.price * item.quantity}</span>
+                        </div>
+                    `).join('')}
+                    <div class="border-t border-gray-600 pt-2">
+                        <div class="flex justify-between">
+                            <span>Subtotal</span>
+                            <span>$${subtotal}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Shipping</span>
+                            <span>$${shipping}</span>
+                        </div>
+                        <div class="flex justify-between font-bold text-orange-400">
+                            <span>Total</span>
+                            <span>$${total}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleOrder(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const orderData = {
+                id: Date.now().toString(),
+                date: new Date().toISOString(),
+                items: [...cart],
+                customer: {
+                    name: formData.get('name') || 'N/A',
+                    email: formData.get('email') || 'N/A',
+                    phone: formData.get('phone') || 'N/A',
+                    country: formData.get('country') || 'N/A'
+                },
+                shipping: {
+                    address: formData.get('address') || 'N/A',
+                    city: formData.get('city') || 'N/A',
+                    state: formData.get('state') || 'N/A',
+                    zip: formData.get('zip') || 'N/A'
+                },
+                payment: formData.get('payment') || 'N/A',
+                instructions: formData.get('instructions') || 'N/A',
+                status: 'pending',
+                total: cart.reduce((total, item) => total + (item.price * item.quantity), 0) + 15
+            };
+            
+            // Save order to localStorage
+            const orders = JSON.parse(localStorage.getItem('impactZoneOrders')) || [];
+            orders.push(orderData);
+            localStorage.setItem('impactZoneOrders', JSON.stringify(orders));
+            
+            // Clear cart
+            cart = [];
+            saveCart();
+            updateCartCount();
+            
+            // Close modal and show success
+            closeOrderModal();
+            showNotification('Order placed successfully! Order ID: ' + orderData.id, 'success');
+            
+            // Reset form
+            event.target.reset();
+        }
+
+        function closeOrderModal(event) {
+            if (event && event.target !== event.currentTarget && !event.target.closest('button[onclick*="closeOrderModal"]')) {
+                return;
+            }
+            
+            const modal = document.getElementById('orderModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ========================================
+        // NOTIFICATION SYSTEM
+        // ========================================
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 
+                'bg-blue-500'
+            } text-white`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // ========================================
+        // ADMIN GEAR LOADING
+        // ========================================
+        function loadAdminGear() {
+            const adminGear = JSON.parse(localStorage.getItem('impactZonePublicGear')) || [];
+            
+            if (adminGear.length === 0) {
+                return; // No admin gear to display
+            }
+            
+            // Add admin gear to the gear data
+            adminGear.forEach(item => {
+                gearData[item.name] = {
+                    id: item.id,
+                    category: item.category.toUpperCase(),
+                    categoryColor: getCategoryColor(item.category),
+                    title: item.name,
+                    price: item.price,
+                    rating: item.rating.toString(),
+                    description: item.description,
+                    specifications: [
+                        `Category: ${item.category}`,
+                        `Price: $${item.price}`,
+                        `Rating: ${item.rating}/5`,
+                        `Stock: ${item.stock} units`,
+                        'Admin Added Item'
+                    ],
+                    features: [
+                        'Admin verified quality',
+                        'Professional grade',
+                        'Kaslod Media approved',
+                        'Premium materials'
+                    ],
+                    image: 'http://static.photos/sport/1024x576/23', // Default gear image
+                    stock: item.stock || 10
+                };
+            });
+            
+            // Update the gear grid display
+            updateGearGrid();
+        }
+
+        function getCategoryColor(category) {
+            const colors = {
+                'boards': 'orange',
+                'wheels': 'pink',
+                'safety': 'green',
+                'accessories': 'purple'
+            };
+            return colors[category.toLowerCase()] || 'orange';
+        }
+
+        function updateGearGrid() {
+            const container = document.getElementById('gearGrid');
+            if (!container) return;
+            
+            // Don't clear existing content, just add admin gear to existing default gear
+            // The default gear is already in the HTML, we just need to add admin gear
+            
+            // Add admin gear items to the existing grid
+            const adminGear = JSON.parse(localStorage.getItem('impactZonePublicGear')) || [];
+            
+            adminGear.forEach(item => {
+                const gearCard = document.createElement('div');
+                gearCard.className = `gear-card bg-gray-800 rounded-xl overflow-hidden`; 
+                gearCard.setAttribute('data-category', item.category.toLowerCase());
+                
+                gearCard.innerHTML = `
+                    <div class="relative h-64 bg-gray-700 flex items-center justify-center">
+                        <i data-feather="box" class="w-20 h-20 text-orange-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs text-orange-400 font-semibold">${item.category.toUpperCase()}</span>
+                        <h3 class="text-xl font-bold mt-2 mb-2">${item.name}</h3>
+                        <p class="text-gray-400 text-sm mb-4">${item.description}</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-orange-400">$${item.price}</span>
+                            <div class="flex items-center">
+                                <i data-feather="star" class="w-4 h-4 text-yellow-400 fill-current"></i>
+                                <span class="ml-1 text-sm">${item.rating}</span>
+                            </div>
+                        </div>
+                        <button onclick="viewGearDetails('${item.name}')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(gearCard);
+            });
+            
+            feather.replace();
+        }
+
+        // Initialize everything on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            loadAdminGear(); // Load admin gear first
+            initVantaBackground();
+            feather.replace();
+            updateCartCount();
+        });
+
+        // Initialize Vanta.js background
+        function initVantaBackground() {
+            VANTA.WAVES({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0xff7b33,
+                shininess: 35.00,
+                waveHeight: 15.00,
+                waveSpeed: 0.75,
+                zoom: 0.85
+            });
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu) {
+                mobileMenu.classList.toggle('hidden');
+            }
+        }
+
+        // Filter gear by category
+        function filterGear(category) {
+            const cards = document.querySelectorAll('.gear-card');
+            const buttons = document.querySelectorAll('.gear-filter-btn');
+            
+            // Update button styles
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-orange-500', 'text-white');
+                btn.classList.add('bg-gray-800', 'text-gray-300');
+            });
+            
+            event.target.classList.add('active', 'bg-orange-500', 'text-white');
+            event.target.classList.remove('bg-gray-800', 'text-gray-300');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // View gear details - This function is now handled by the comprehensive gear modal system above
+
+        // Submit Clip Modal
+        function openSubmitModal() {
+            const modal = document.getElementById('submitModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                feather.replace();
+            }
+        }
+
+        function closeSubmitModal() {
+            const modal = document.getElementById('submitModal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Submit clip form
+        function handleSubmitClip(event) {
+            event.preventDefault();
+            alert('Clip submitted successfully!\n(Feature coming soon!)');
+            closeSubmitModal();
+            event.target.reset();
+        }
+
+        // Initialize everything on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initVantaBackground();
+            feather.replace();
+        });
+    </script>
+</body>
+</html>

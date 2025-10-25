@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaslod Media | Admin Login</title>
+    <link rel="icon" type="image/jpeg" href="images/kaslod.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap');
+        .gradient-text {
+            background: linear-gradient(45deg, #f97316, #ef4444, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Enhanced Navbar Styles */
+        .navbar-link {
+            position: relative;
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        
+        .navbar-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(239, 68, 68, 0.1));
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .navbar-link:hover::before {
+            opacity: 1;
+        }
+        
+        .navbar-link:hover {
+            transform: translateY(-2px);
+            color: #f97316;
+        }
+        
+        .navbar-link.active {
+            background: linear-gradient(135deg, #f97316, #ef4444);
+            color: white;
+        }
+        
+        .navbar-link.active::before {
+            opacity: 0;
+        }
+        
+        .navbar-link.active:hover {
+            transform: translateY(-2px);
+        }
+        
+        .admin-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+        
+        .navbar-logo {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+        .login-modal {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .login-modal-content {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .form-input {
+            background: #374151;
+            border: 1px solid #4b5563;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            border-color: #f97316;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
+        .error-message {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+        .success-message {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-['Montserrat'] overflow-x-hidden">
+    <div id="vanta-bg" class="fixed inset-0 -z-10 opacity-20"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-gray-900/90 backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="kaslod.html" class="flex items-center space-x-2 navbar-logo">
+                        <img src="images/kaslod.jpg" alt="Kaslod Media Logo" class="h-10 w-auto rounded-lg">
+                        <span class="text-2xl font-bold font-['Bebas+Neue'] tracking-wider gradient-text">KASLOD MEDIA</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="kaslod.html" class="navbar-link">Highlights</a>
+                    <a href="impact_athletes.html" class="navbar-link">Athletes</a>
+                    <a href="impact_events.html" class="navbar-link">Events</a>
+                    <a href="impact_gear.html" class="navbar-link">Gear</a>
+                    <span class="admin-btn active">Admin Login</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-7xl font-bold font-['Bebas+Neue'] tracking-wide mb-6">
+                    <span class="gradient-text">ADMIN</span><br>
+                    <span class="text-white">PORTAL</span>
+                </h1>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Access the Impact Zone admin dashboard to manage athletes, events, gear, and orders.
+                </p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="max-w-md mx-auto">
+                <div class="login-modal-content bg-gray-800 rounded-xl p-8 shadow-2xl border border-gray-700">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="shield" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold font-['Bebas+Neue'] gradient-text mb-2">ADMIN LOGIN</h2>
+                        <p class="text-gray-400">Enter your credentials to access the admin dashboard</p>
+                    </div>
+
+                    <form id="login-form" onsubmit="handleLogin(event)" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Username</label>
+                            <input type="text" id="username" required class="w-full form-input rounded-md px-4 py-3 focus:outline-none" placeholder="Enter your username">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Password</label>
+                            <input type="password" id="password" required class="w-full form-input rounded-md px-4 py-3 focus:outline-none" placeholder="Enter your password">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-600 bg-gray-700 text-orange-500 focus:ring-orange-500">
+                                <span class="ml-2 text-sm text-gray-300">Remember me</span>
+                            </label>
+                            <a href="#" class="text-sm text-orange-400 hover:text-orange-300">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 py-3 rounded-md font-medium transition transform hover:scale-105">
+                            <i data-feather="log-in" class="w-5 h-5 inline mr-2"></i>
+                            Login to Dashboard
+                        </button>
+                    </form>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-400">
+                            Default credentials: <span class="text-orange-400">admin</span> / <span class="text-orange-400">admin123</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800/50 border-t border-gray-700 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-gray-500 text-sm">© 2023 Kaslod Media. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========================================
+        // ADMIN LOGIN SYSTEM
+        // ========================================
+        const adminCredentials = {
+            username: 'admin',
+            password: 'admin123'
+        };
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Check credentials
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                // Save login session
+                localStorage.setItem('impactZoneAdminLoggedIn', 'true');
+                localStorage.setItem('impactZoneAdminUser', username);
+                
+                // Show success message
+                showMessage('Login successful! Redirecting to dashboard...', 'success');
+                
+                // Redirect to admin dashboard
+                setTimeout(() => {
+                    window.location.href = 'admin_dashboard.html';
+                }, 1500);
+            } else {
+                showMessage('Invalid username or password. Please try again.', 'error');
+            }
+        }
+
+        function showMessage(message, type) {
+            // Remove existing messages
+            const existingMessage = document.querySelector('.error-message, .success-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
+            messageDiv.textContent = message;
+            
+            const form = document.getElementById('login-form');
+            form.appendChild(messageDiv);
+        }
+
+        // Check if already logged in
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('impactZoneAdminLoggedIn');
+            if (isLoggedIn === 'true') {
+                window.location.href = 'admin_dashboard.html';
+            }
+        }
+
+        // Initialize Vanta.js background
+        function initVantaBackground() {
+            VANTA.WAVES({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0xff7b33,
+                shininess: 35.00,
+                waveHeight: 15.00,
+                waveSpeed: 0.75,
+                zoom: 0.85
+            });
+        }
+
+        // Initialize everything on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initVantaBackground();
+            feather.replace();
+            checkLoginStatus();
+        });
+    </script>
+</body>
+</html>
+

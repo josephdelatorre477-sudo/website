@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaslod Media | Athletes</title>
+    <link rel="icon" type="image/jpeg" href="images/kaslod.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap');
+        .scroll-snap {
+            scroll-snap-type: y mandatory;
+        }
+        .scroll-snap > section {
+            scroll-snap-align: start;
+        }
+        .skew-card {
+            transform: perspective(1000px) rotateX(10deg) rotateY(-5deg);
+            transition: all 0.3s ease;
+        }
+        .skew-card:hover {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #f97316, #ef4444, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Enhanced Navbar Styles */
+        .navbar-link {
+            position: relative;
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        
+        .navbar-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(239, 68, 68, 0.1));
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .navbar-link:hover::before {
+            opacity: 1;
+        }
+        
+        .navbar-link:hover {
+            transform: translateY(-2px);
+            color: #f97316;
+        }
+        
+        .navbar-link.active {
+            background: linear-gradient(135deg, #f97316, #ef4444);
+            color: white;
+        }
+        
+        .navbar-link.active::before {
+            opacity: 0;
+        }
+        
+        .navbar-link.active:hover {
+            transform: translateY(-2px);
+        }
+        
+        .admin-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+        
+        .logout-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        }
+        
+        .navbar-logo {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .mobile-menu-btn {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(239, 68, 68, 0.1));
+            border: 2px solid rgba(249, 115, 22, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(239, 68, 68, 0.2));
+            border-color: rgba(249, 115, 22, 0.5);
+            transform: scale(1.05);
+        }
+        .profile-card {
+            transition: all 0.3s ease;
+        }
+        .profile-card:hover {
+            transform: translateY(-10px);
+        }
+        /* Profile Modal Styles */
+        .profile-modal {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .profile-modal-content {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .achievement-badge {
+            background: linear-gradient(45deg, #f97316, #ef4444);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .video-thumbnail {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .video-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(249, 115, 22, 0.9);
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .video-thumbnail:hover::before {
+            opacity: 1;
+            width: 70px;
+            height: 70px;
+        }
+        .video-thumbnail::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: white;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .video-thumbnail:hover::after {
+            opacity: 1;
+            font-size: 28px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-['Montserrat'] overflow-x-hidden">
+    <div id="vanta-bg" class="fixed inset-0 -z-10 opacity-20"></div>
+    
+    <!-- Bagong Navigation -->
+    <nav class="fixed w-full z-50 bg-gray-900/90 backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="kaslod.html" class="flex items-center space-x-2 navbar-logo">
+                        <img src="images/kaslod.jpg" alt="Kaslod Media Logo" class="h-10 w-auto rounded-lg">
+                        <span class="text-2xl font-bold font-['Bebas+Neue'] tracking-wider gradient-text">KASLOD MEDIA</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="kaslod.html" class="navbar-link">Highlights</a>
+                    <a href="impact_athletes.html" class="navbar-link active">Athletes</a>
+                    <a href="impact_events.html" class="navbar-link">Events</a>
+                    <a href="impact_gear.html" class="navbar-link">Gear</a>
+                    <a href="admin_login.html" class="admin-btn">
+                        Login
+                    </a>
+                    <button onclick="openSubmitModal()" class="navbar-link">
+                        Submit Clip
+                    </button>
+                </div>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 mobile-menu-btn">
+                    <i data-feather="menu"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-7xl font-bold font-['Bebas+Neue'] tracking-wide mb-6">
+                    <span class="gradient-text">MEET THE</span><br>
+                    <span class="text-white">ATHLETES</span>
+                </h1>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Discover the world's most talented action sports athletes across skateboarding, BMX, parkour, and motocross.
+                </p>
+            </div>
+
+            <!-- Category Navigation -->
+            <div class="flex justify-center space-x-4 mb-12 flex-wrap gap-2">
+                <button onclick="showAthletesByCategory('skateboarding')" class="category-btn active px-6 py-2 rounded-md bg-orange-500 text-white font-medium transition flex items-center">
+                    <i data-feather="box" class="w-4 h-4 mr-2"></i>
+                    Skateboarding
+                </button>
+                <button onclick="showAthletesByCategory('bmx')" class="category-btn px-6 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium transition flex items-center">
+                    <i data-feather="disc" class="w-4 h-4 mr-2"></i>
+                    BMX
+                </button>
+                <button onclick="showAthletesByCategory('parkour')" class="category-btn px-6 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium transition flex items-center">
+                    <i data-feather="user" class="w-4 h-4 mr-2"></i>
+                    Parkour
+                </button>
+                <button onclick="showAthletesByCategory('motocross')" class="category-btn px-6 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium transition flex items-center">
+                    <i data-feather="zap" class="w-4 h-4 mr-2"></i>
+                    Motocross
+                </button>
+            </div>
+
+            <!-- Athletes Dashboard -->
+            <div id="athletes-dashboard" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Athletes will be dynamically loaded here based on category -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Athlete Profile Modal -->
+    <div id="profileModal" class="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 hidden items-center justify-center p-4 profile-modal" onclick="closeProfileModal(event)">
+        <div class="profile-modal-content relative w-full max-w-6xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <button onclick="closeProfileModal()" class="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors z-10">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <div class="bg-gray-800 rounded-xl overflow-hidden">
+                <!-- Modal Header -->
+                <div class="relative h-64 bg-gradient-to-br from-orange-500/20 to-pink-500/20">
+                    <img id="athlete-photo" src="" alt="Athlete" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h2 id="athlete-name" class="text-3xl font-bold mb-2"></h2>
+                        <p id="athlete-nickname" class="text-orange-400 text-lg mb-2"></p>
+                        <div class="flex items-center text-gray-300">
+                            <i data-feather="map-pin" class="w-4 h-4 mr-2"></i>
+                            <span id="athlete-country"></span>
+                        </div>
+                    </div>
+                    <span id="athlete-category" class="absolute top-6 right-6 achievement-badge"></span>
+                </div>
+
+                <!-- Modal Content -->
+                <div class="p-8">
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-5 gap-6 mb-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-orange-400" id="stat-runs">0</div>
+                            <div class="text-sm text-gray-400">Runs</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-orange-400" id="stat-speed">0</div>
+                            <div class="text-sm text-gray-400">Top Speed</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-orange-400" id="stat-points">0</div>
+                            <div class="text-sm text-gray-400">Points</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-orange-400" id="stat-years">0</div>
+                            <div class="text-sm text-gray-400">Years Active</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-orange-400" id="stat-rank">0</div>
+                            <div class="text-sm text-gray-400">World Rank</div>
+                        </div>
+                    </div>
+
+                    <!-- Bio Section -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold mb-4">Biography</h3>
+                        <p id="athlete-bio" class="text-gray-300 leading-relaxed"></p>
+                    </div>
+
+                    <!-- Achievements Section -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold mb-4">Achievements</h3>
+                        <div id="achievements-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Achievements will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Recent Runs Section -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold mb-4">Recent Runs</h3>
+                        <div id="recent-runs-list" class="space-y-4">
+                            <!-- Recent runs will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Video Gallery -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold mb-4">Video Gallery</h3>
+                        <div id="video-gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Videos will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="flex space-x-4">
+                        <a id="social-instagram" href="#" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded-md font-medium transition flex items-center hidden">
+                            <i data-feather="instagram" class="w-4 h-4 mr-2"></i>
+                            Instagram
+                        </a>
+                        <a id="social-youtube" href="#" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md font-medium transition flex items-center hidden">
+                            <i data-feather="youtube" class="w-4 h-4 mr-2"></i>
+                            YouTube
+                        </a>
+                        <a id="social-twitter" href="#" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md font-medium transition flex items-center hidden">
+                            <i data-feather="twitter" class="w-4 h-4 mr-2"></i>
+                            Twitter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-2 mb-4">
+                    <img src="images/kaslod.jpg" alt="Kaslod Media Logo" class="h-8 w-auto rounded-lg">
+                    <span class="text-xl font-bold font-['Bebas+Neue'] tracking-wider gradient-text">KASLOD MEDIA</span>
+                </div>
+                <p class="text-gray-500 text-sm">© 2023 Kaslod Media. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========================================
+        // ADMIN LOGIN SESSION CHECK
+        // ========================================
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('impactZoneAdminLoggedIn');
+            if (isLoggedIn === 'true') {
+                // Update navbar to show admin state
+                updateNavbarForAdmin();
+            }
+        }
+
+        function updateNavbarForAdmin() {
+            const loginBtn = document.querySelector('a[href="admin_login.html"]');
+            if (loginBtn) {
+                loginBtn.textContent = 'Admin Dashboard';
+                loginBtn.href = 'admin_dashboard.html';
+                loginBtn.className = 'admin-btn';
+                
+                // Add logout button
+                const logoutBtn = document.createElement('button');
+                logoutBtn.textContent = 'Logout';
+                logoutBtn.className = 'logout-btn';
+                logoutBtn.onclick = logout;
+                
+                loginBtn.parentNode.insertBefore(logoutBtn, loginBtn.nextSibling);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('impactZoneAdminLoggedIn');
+            localStorage.removeItem('impactZoneAdminUser');
+            window.location.reload();
+        }
+
+        // ========================================
+        // REAL PROFESSIONAL ATHLETES DATA
+        // ========================================
+        const realAthletesData = {
+            skateboarding: [
+                {
+                    id: 'tony-hawk',
+                    name: 'Tony Hawk',
+                    nickname: 'The Birdman',
+                    country: 'USA',
+                    category: 'LEGEND',
+                    categoryColor: 'purple',
+                    photo: 'http://static.photos/sport/1024x576/31',
+                    stats: {
+                        runs: 1000,
+                        topSpeed: 45.2,
+                        points: 50000,
+                        yearsActive: 40,
+                        worldRank: 1
+                    },
+                    bio: 'Legendary skateboarder known for inventing the 900 trick and revolutionizing vert skateboarding. Considered one of the most influential skateboarders of all time.',
+                    achievements: [
+                        { title: 'Inventor of the 900', year: '1999', type: 'Innovation' },
+                        { title: 'X Games Gold Medalist', year: '1995-2003', type: 'Competition' },
+                        { title: 'Skateboard Hall of Fame', year: '2009', type: 'Recognition' }
+                    ],
+                    recentRuns: [
+                        { location: 'Tony Hawk\'s Ramp', speed: 42.1, date: '2024-01-20', rating: 'Legendary' },
+                        { location: 'X Games', speed: 44.8, date: '2023-12-15', rating: 'Epic' }
+                    ],
+                    videos: [
+                        { id: 'AkyempRzRL8', title: 'The 900 - Historic Moment', thumbnail: 'https://img.youtube.com/vi/AkyempRzRL8/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/tonyhawk',
+                        youtube: 'https://youtube.com/@tonyhawk',
+                        twitter: 'https://twitter.com/tonyhawk'
+                    }
+                },
+                {
+                    id: 'nyjah-huston',
+                    name: 'Nyjah Huston',
+                    nickname: 'The Street King',
+                    country: 'USA',
+                    category: 'CHAMPION',
+                    categoryColor: 'orange',
+                    photo: 'http://static.photos/sport/1024x576/32',
+                    stats: {
+                        runs: 200,
+                        topSpeed: 35.8,
+                        points: 45000,
+                        yearsActive: 15,
+                        worldRank: 2
+                    },
+                    bio: 'Multiple X Games gold medalist and street skateboarding champion. Known for his technical precision and consistency in competitions.',
+                    achievements: [
+                        { title: 'X Games Gold Medalist', year: '2010-2023', type: 'Competition' },
+                        { title: 'Street League Champion', year: '2012-2019', type: 'Championship' },
+                        { title: 'Thrasher Skater of the Year', year: '2012', type: 'Recognition' }
+                    ],
+                    recentRuns: [
+                        { location: 'Street League Finals', speed: 35.8, date: '2024-01-18', rating: 'Epic' },
+                        { location: 'X Games', speed: 34.2, date: '2023-12-10', rating: 'Great' }
+                    ],
+                    videos: [
+                        { id: 'dQw4w9WgxcQ', title: 'Street League Victory', thumbnail: 'https://img.youtube.com/vi/dQw4w9WgxcQ/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/nyjah',
+                        youtube: 'https://youtube.com/@nyjahhuston',
+                        twitter: 'https://twitter.com/nyjah'
+                    }
+                },
+                {
+                    id: 'sky-brown',
+                    name: 'Sky Brown',
+                    nickname: 'The Prodigy',
+                    country: 'UK',
+                    category: 'RISING',
+                    categoryColor: 'green',
+                    photo: 'http://static.photos/sport/1024x576/33',
+                    stats: {
+                        runs: 50,
+                        topSpeed: 28.5,
+                        points: 15000,
+                        yearsActive: 8,
+                        worldRank: 15
+                    },
+                    bio: 'Youngest Olympic medalist at age 13, Tokyo 2020 bronze medalist. Represents the future of skateboarding with incredible talent.',
+                    achievements: [
+                        { title: 'Olympic Bronze Medal', year: '2020', type: 'Olympic' },
+                        { title: 'Youngest Olympic Medalist', year: '2020', type: 'Record' },
+                        { title: 'X Games Gold Medal', year: '2021', type: 'Competition' }
+                    ],
+                    recentRuns: [
+                        { location: 'Tokyo Olympics', speed: 28.5, date: '2021-07-25', rating: 'Olympic' },
+                        { location: 'X Games', speed: 27.8, date: '2023-11-20', rating: 'Epic' }
+                    ],
+                    videos: [
+                        { id: '9bZkp7q19f0', title: 'Olympic Bronze Run', thumbnail: 'https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/skybrown',
+                        youtube: 'https://youtube.com/@skybrown',
+                        twitter: 'https://twitter.com/skybrown'
+                    }
+                }
+            ],
+            bmx: [
+                {
+                    id: 'mat-hoffman',
+                    name: 'Mat Hoffman',
+                    nickname: 'The Condor',
+                    country: 'USA',
+                    category: 'PIONEER',
+                    categoryColor: 'blue',
+                    photo: 'http://static.photos/sport/1024x576/34',
+                    stats: {
+                        runs: 500,
+                        topSpeed: 0,
+                        points: 40000,
+                        yearsActive: 35,
+                        worldRank: 1
+                    },
+                    bio: 'Pioneer of big air BMX and founder of Hoffman Bikes. Known for pushing the limits of what\'s possible on a BMX bike.',
+                    achievements: [
+                        { title: 'Inventor of Big Air', year: '1990s', type: 'Innovation' },
+                        { title: 'X Games Gold Medalist', year: '1995-2005', type: 'Competition' },
+                        { title: 'BMX Hall of Fame', year: '2008', type: 'Recognition' }
+                    ],
+                    recentRuns: [
+                        { location: 'Hoffman\'s Ramp', speed: 0, date: '2024-01-15', rating: 'Legendary' },
+                        { location: 'X Games', speed: 0, date: '2023-12-05', rating: 'Epic' }
+                    ],
+                    videos: [
+                        { id: '70ovFxDe9i8', title: 'Big Air Pioneer', thumbnail: 'https://img.youtube.com/vi/70ovFxDe9i8/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/mathoffman',
+                        youtube: 'https://youtube.com/@mathoffman',
+                        twitter: 'https://twitter.com/mathoffman'
+                    }
+                },
+                {
+                    id: 'dave-mirra',
+                    name: 'Dave Mirra',
+                    nickname: 'The Legend',
+                    country: 'USA',
+                    category: 'LEGEND',
+                    categoryColor: 'purple',
+                    photo: 'http://static.photos/sport/1024x576/35',
+                    stats: {
+                        runs: 300,
+                        topSpeed: 0,
+                        points: 35000,
+                        yearsActive: 20,
+                        worldRank: 2
+                    },
+                    bio: 'Most decorated X Games athlete with 24 medals. BMX legend who dominated competitions for over a decade.',
+                    achievements: [
+                        { title: '24 X Games Medals', year: '1995-2009', type: 'Record' },
+                        { title: 'BMX Street Champion', year: '1995-2005', type: 'Championship' },
+                        { title: 'BMX Hall of Fame', year: '2010', type: 'Recognition' }
+                    ],
+                    recentRuns: [
+                        { location: 'X Games Finals', speed: 0, date: '2009-08-02', rating: 'Legendary' },
+                        { location: 'Street Competition', speed: 0, date: '2008-12-15', rating: 'Epic' }
+                    ],
+                    videos: [
+                        { id: '1k7jG3j3tlM', title: 'X Games Dominance', thumbnail: 'https://img.youtube.com/vi/1k7jG3j3tlM/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/davemirra',
+                        youtube: 'https://youtube.com/@davemirra',
+                        twitter: 'https://twitter.com/davemirra'
+                    }
+                },
+                {
+                    id: 'garrett-reynolds',
+                    name: 'Garrett Reynolds',
+                    nickname: 'The Innovator',
+                    country: 'USA',
+                    category: 'CHAMPION',
+                    categoryColor: 'orange',
+                    photo: 'http://static.photos/sport/1024x576/36',
+                    stats: {
+                        runs: 150,
+                        topSpeed: 0,
+                        points: 25000,
+                        yearsActive: 12,
+                        worldRank: 3
+                    },
+                    bio: 'Street BMX innovator known for pushing the boundaries of street riding. Multiple X Games gold medalist.',
+                    achievements: [
+                        { title: 'X Games Gold Medalist', year: '2010-2020', type: 'Competition' },
+                        { title: 'Street BMX Innovator', year: '2015', type: 'Innovation' },
+                        { title: 'BMX Street Champion', year: '2018', type: 'Championship' }
+                    ],
+                    recentRuns: [
+                        { location: 'Street Session', speed: 0, date: '2024-01-10', rating: 'Epic' },
+                        { location: 'X Games', speed: 0, date: '2023-11-25', rating: 'Great' }
+                    ],
+                    videos: [
+                        { id: '3JNWCr5gCSo', title: 'Street Innovation', thumbnail: 'https://img.youtube.com/vi/3JNWCr5gCSo/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/garrettreynolds',
+                        youtube: 'https://youtube.com/@garrettreynolds',
+                        twitter: 'https://twitter.com/garrettreynolds'
+                    }
+                }
+            ],
+            parkour: [
+                {
+                    id: 'david-belle',
+                    name: 'David Belle',
+                    nickname: 'The Founder',
+                    country: 'France',
+                    category: 'FOUNDER',
+                    categoryColor: 'green',
+                    photo: 'http://static.photos/sport/1024x576/37',
+                    stats: {
+                        runs: 1000,
+                        topSpeed: 0,
+                        points: 50000,
+                        yearsActive: 30,
+                        worldRank: 1
+                    },
+                    bio: 'Founder of parkour discipline. Developed the art of movement and efficiency in urban environments.',
+                    achievements: [
+                        { title: 'Founder of Parkour', year: '1980s', type: 'Innovation' },
+                        { title: 'Parkour Pioneer', year: '1990s', type: 'Recognition' },
+                        { title: 'Movement Philosophy Creator', year: '2000s', type: 'Innovation' }
+                    ],
+                    recentRuns: [
+                        { location: 'Paris Urban', speed: 0, date: '2024-01-12', rating: 'Legendary' },
+                        { location: 'Lisses Training', speed: 0, date: '2023-12-20', rating: 'Epic' }
+                    ],
+                    videos: [
+                        { id: 'AkyempRzRL8', title: 'Parkour Origins', thumbnail: 'https://img.youtube.com/vi/AkyempRzRL8/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/davidbelle',
+                        youtube: 'https://youtube.com/@davidbelle',
+                        twitter: 'https://twitter.com/davidbelle'
+                    }
+                },
+                {
+                    id: 'sebastien-foucan',
+                    name: 'Sébastien Foucan',
+                    nickname: 'The Freerunner',
+                    country: 'France',
+                    category: 'PIONEER',
+                    categoryColor: 'blue',
+                    photo: 'http://static.photos/sport/1024x576/38',
+                    stats: {
+                        runs: 500,
+                        topSpeed: 0,
+                        points: 30000,
+                        yearsActive: 25,
+                        worldRank: 2
+                    },
+                    bio: 'Pioneer of freerunning discipline. Known for incorporating acrobatics and self-expression into parkour.',
+                    achievements: [
+                        { title: 'Freerunning Pioneer', year: '2000s', type: 'Innovation' },
+                        { title: 'Casino Royale Actor', year: '2006', type: 'Media' },
+                        { title: 'Movement Philosophy', year: '2010s', type: 'Innovation' }
+                    ],
+                    recentRuns: [
+                        { location: 'London Urban', speed: 0, date: '2024-01-08', rating: 'Epic' },
+                        { location: 'Paris Session', speed: 0, date: '2023-12-15', rating: 'Great' }
+                    ],
+                    videos: [
+                        { id: 'dQw4w9WgxcQ', title: 'Freerunning Flow', thumbnail: 'https://img.youtube.com/vi/dQw4w9WgxcQ/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/sebastienfoucan',
+                        youtube: 'https://youtube.com/@sebastienfoucan',
+                        twitter: 'https://twitter.com/sebastienfoucan'
+                    }
+                },
+                {
+                    id: 'ryan-doyle',
+                    name: 'Ryan Doyle',
+                    nickname: 'The Ambassador',
+                    country: 'UK',
+                    category: 'CHAMPION',
+                    categoryColor: 'orange',
+                    photo: 'http://static.photos/sport/1024x576/39',
+                    stats: {
+                        runs: 200,
+                        topSpeed: 0,
+                        points: 20000,
+                        yearsActive: 15,
+                        worldRank: 3
+                    },
+                    bio: 'Global parkour ambassador and Red Bull Art of Motion champion. Promotes parkour worldwide through competitions and media.',
+                    achievements: [
+                        { title: 'Red Bull Art of Motion Champion', year: '2010', type: 'Championship' },
+                        { title: 'Global Ambassador', year: '2015', type: 'Recognition' },
+                        { title: 'Parkour Workshop Leader', year: '2020', type: 'Education' }
+                    ],
+                    recentRuns: [
+                        { location: 'Red Bull Competition', speed: 0, date: '2024-01-05', rating: 'Epic' },
+                        { location: 'London Workshop', speed: 0, date: '2023-12-10', rating: 'Great' }
+                    ],
+                    videos: [
+                        { id: '9bZkp7q19f0', title: 'Art of Motion Victory', thumbnail: 'https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/ryandoyle',
+                        youtube: 'https://youtube.com/@ryandoyle',
+                        twitter: 'https://twitter.com/ryandoyle'
+                    }
+                }
+            ],
+            motocross: [
+                {
+                    id: 'ricky-carmichael',
+                    name: 'Ricky Carmichael',
+                    nickname: 'The GOAT',
+                    country: 'USA',
+                    category: 'LEGEND',
+                    categoryColor: 'purple',
+                    photo: 'http://static.photos/sport/1024x576/40',
+                    stats: {
+                        runs: 300,
+                        topSpeed: 85.2,
+                        points: 60000,
+                        yearsActive: 20,
+                        worldRank: 1
+                    },
+                    bio: 'Greatest of All Time in motocross. 15-time champion who dominated the sport for over a decade.',
+                    achievements: [
+                        { title: '15-Time Champion', year: '1997-2007', type: 'Championship' },
+                        { title: 'Supercross Legend', year: '2000s', type: 'Recognition' },
+                        { title: 'Motocross Hall of Fame', year: '2010', type: 'Recognition' }
+                    ],
+                    recentRuns: [
+                        { location: 'Supercross Finals', speed: 85.2, date: '2007-05-20', rating: 'Legendary' },
+                        { location: 'Motocross Championship', speed: 83.8, date: '2006-12-15', rating: 'Epic' }
+                    ],
+                    videos: [
+                        { id: '70ovFxDe9i8', title: 'GOAT Moments', thumbnail: 'https://img.youtube.com/vi/70ovFxDe9i8/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/rickycarmichael',
+                        youtube: 'https://youtube.com/@rickycarmichael',
+                        twitter: 'https://twitter.com/rickycarmichael'
+                    }
+                },
+                {
+                    id: 'jeremy-mcgrath',
+                    name: 'Jeremy McGrath',
+                    nickname: 'The King',
+                    country: 'USA',
+                    category: 'LEGEND',
+                    categoryColor: 'red',
+                    photo: 'http://static.photos/sport/1024x576/41',
+                    stats: {
+                        runs: 250,
+                        topSpeed: 82.5,
+                        points: 45000,
+                        yearsActive: 18,
+                        worldRank: 2
+                    },
+                    bio: 'Supercross legend known as "The King". 7-time Supercross champion who revolutionized the sport.',
+                    achievements: [
+                        { title: '7-Time Supercross Champion', year: '1993-2000', type: 'Championship' },
+                        { title: 'Supercross King', year: '1990s', type: 'Recognition' },
+                        { title: 'Motocross Hall of Fame', year: '2008', type: 'Recognition' }
+                    ],
+                    recentRuns: [
+                        { location: 'Supercross Championship', speed: 82.5, date: '2000-05-15', rating: 'Legendary' },
+                        { location: 'Anaheim Stadium', speed: 81.2, date: '1999-12-20', rating: 'Epic' }
+                    ],
+                    videos: [
+                        { id: '1k7jG3j3tlM', title: 'The King\'s Reign', thumbnail: 'https://img.youtube.com/vi/1k7jG3j3tlM/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/jeremymcgrath',
+                        youtube: 'https://youtube.com/@jeremymcgrath',
+                        twitter: 'https://twitter.com/jeremymcgrath'
+                    }
+                },
+                {
+                    id: 'eli-tomac',
+                    name: 'Eli Tomac',
+                    nickname: 'The Current King',
+                    country: 'USA',
+                    category: 'CHAMPION',
+                    categoryColor: 'orange',
+                    photo: 'http://static.photos/sport/1024x576/42',
+                    stats: {
+                        runs: 150,
+                        topSpeed: 80.8,
+                        points: 30000,
+                        yearsActive: 12,
+                        worldRank: 3
+                    },
+                    bio: 'Current top rider in motocross and Supercross. Multiple championship winner known for his aggressive riding style.',
+                    achievements: [
+                        { title: 'Supercross Champion', year: '2020', type: 'Championship' },
+                        { title: 'Motocross Champion', year: '2017-2018', type: 'Championship' },
+                        { title: 'Current Top Rider', year: '2024', type: 'Recognition' }
+                    ],
+                    recentRuns: [
+                        { location: 'Supercross Finals', speed: 80.8, date: '2024-01-18', rating: 'Epic' },
+                        { location: 'Motocross Championship', speed: 79.5, date: '2023-12-10', rating: 'Great' }
+                    ],
+                    videos: [
+                        { id: '3JNWCr5gCSo', title: 'Current Champion', thumbnail: 'https://img.youtube.com/vi/3JNWCr5gCSo/maxresdefault.jpg' }
+                    ],
+                    social: {
+                        instagram: 'https://instagram.com/elitomac',
+                        youtube: 'https://youtube.com/@elitomac',
+                        twitter: 'https://twitter.com/elitomac'
+                    }
+                }
+            ]
+        };
+
+        // ========================================
+        // CATEGORY-BASED DISPLAY FUNCTIONS
+        // ========================================
+        function showAthletesByCategory(category) {
+            // Update active tab
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-orange-500');
+                btn.classList.add('bg-gray-800');
+            });
+            event.target.classList.add('active', 'bg-orange-500');
+            
+            // Display athletes for selected category
+            const athletes = realAthletesData[category];
+            const container = document.getElementById('athletes-dashboard');
+            
+            container.innerHTML = athletes.map(athlete => `
+                <div class="athlete-card bg-gray-800 rounded-xl overflow-hidden cursor-pointer" onclick="viewRiderProfile('${athlete.name}')">
+                    <div class="relative h-48 bg-gradient-to-br from-orange-500/20 to-pink-500/20">
+                        <img src="${athlete.photo}" alt="${athlete.name}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-${athlete.categoryColor}-500 text-xs px-3 py-1 rounded-full font-bold">${athlete.category}</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">${athlete.name}</h3>
+                        <p class="text-orange-400 mb-2">"${athlete.nickname}"</p>
+                        <div class="flex items-center text-sm text-gray-300 mb-4">
+                            <i data-feather="map-pin" class="w-4 h-4 mr-2"></i>
+                            <span>${athlete.country}</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                            <div>
+                                <span class="text-gray-400">Runs:</span>
+                                <span class="text-orange-400 font-bold">${athlete.stats.runs}</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-400">Rank:</span>
+                                <span class="text-orange-400 font-bold">#${athlete.stats.worldRank}</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            feather.replace();
+        }
+
+        // ========================================
+        // ATHLETE PROFILE MODAL FUNCTIONS
+        // ========================================
+        function viewRiderProfile(athleteName) {
+            // Find athlete data
+            let athlete = null;
+            for (const category in realAthletesData) {
+                athlete = realAthletesData[category].find(a => a.name === athleteName);
+                if (athlete) break;
+            }
+            
+            if (!athlete) {
+                alert('Athlete profile not found!');
+                return;
+            }
+            
+            populateProfileModal(athlete);
+            document.getElementById('profileModal').classList.remove('hidden');
+            document.getElementById('profileModal').classList.add('flex');
+        }
+
+        function populateProfileModal(athlete) {
+            // Update modal content with athlete data
+            document.getElementById('athlete-name').textContent = athlete.name;
+            document.getElementById('athlete-nickname').textContent = `"${athlete.nickname}"`;
+            document.getElementById('athlete-country').textContent = athlete.country;
+            document.getElementById('athlete-category').textContent = athlete.category;
+            document.getElementById('athlete-category').className = `achievement-badge bg-${athlete.categoryColor}-500`;
+            document.getElementById('athlete-photo').src = athlete.photo;
+            document.getElementById('athlete-bio').textContent = athlete.bio;
+            
+            // Update stats
+            document.getElementById('stat-runs').textContent = athlete.stats.runs;
+            document.getElementById('stat-speed').textContent = athlete.stats.topSpeed;
+            document.getElementById('stat-points').textContent = athlete.stats.points;
+            document.getElementById('stat-years').textContent = athlete.stats.yearsActive;
+            document.getElementById('stat-rank').textContent = athlete.stats.worldRank;
+            
+            // Update achievements
+            const achievementsContainer = document.getElementById('achievements-list');
+            achievementsContainer.innerHTML = athlete.achievements.map(achievement => `
+                <div class="bg-gray-800 rounded-lg p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-orange-400">${achievement.title}</h4>
+                            <p class="text-sm text-gray-400">${achievement.type}</p>
+                        </div>
+                        <span class="text-xs text-gray-500">${achievement.year}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Update recent runs
+            const runsContainer = document.getElementById('recent-runs-list');
+            runsContainer.innerHTML = athlete.recentRuns.map(run => `
+                <div class="bg-gray-800 rounded-lg p-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h4 class="font-bold">${run.location}</h4>
+                            <p class="text-sm text-gray-400">${run.date}</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-orange-400 font-bold">${run.speed} km/h</div>
+                            <div class="text-xs text-gray-500">${run.rating}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Update video gallery
+            const videosContainer = document.getElementById('video-gallery');
+            videosContainer.innerHTML = athlete.videos.map(video => `
+                <div class="video-thumbnail cursor-pointer" onclick="playVideo('${video.id}')">
+                    <img src="${video.thumbnail}" alt="${video.title}" class="w-full h-32 object-cover rounded-lg">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-orange-500 rounded-full p-3">
+                            <i data-feather="play" class="w-6 h-6 text-white"></i>
+                        </div>
+                    </div>
+                    <h4 class="mt-2 font-medium text-sm">${video.title}</h4>
+                </div>
+            `).join('');
+            
+            // Update social links
+            if (athlete.social.instagram) {
+                document.getElementById('social-instagram').href = athlete.social.instagram;
+                document.getElementById('social-instagram').classList.remove('hidden');
+            }
+            if (athlete.social.youtube) {
+                document.getElementById('social-youtube').href = athlete.social.youtube;
+                document.getElementById('social-youtube').classList.remove('hidden');
+            }
+            if (athlete.social.twitter) {
+                document.getElementById('social-twitter').href = athlete.social.twitter;
+                document.getElementById('social-twitter').classList.remove('hidden');
+            }
+            
+            feather.replace();
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.add('hidden');
+            document.getElementById('profileModal').classList.remove('flex');
+        }
+
+        function playVideo(videoId) {
+            // Open YouTube video in new tab
+            window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+        }
+
+        // ========================================
+        // UTILITY FUNCTIONS
+        // ========================================
+        function initVantaBackground() {
+            VANTA.WAVES({
+                el: "#vanta-bg",
+                color: 0x1f2937,
+                waveHeight: 20,
+                shininess: 50,
+                waveSpeed: 0.75,
+                zoom: 0.8
+            });
+        }
+
+        function toggleMobileMenu() {
+            // Mobile menu toggle functionality
+            console.log('Mobile menu toggled');
+        }
+
+        function openSubmitModal() {
+            // Submit modal functionality
+            console.log('Submit modal opened');
+        }
+
+        function closeSubmitModal() {
+            // Close submit modal
+            console.log('Submit modal closed');
+        }
+
+        function handleSubmitClip(event) {
+            event.preventDefault();
+            alert('Clip submitted successfully!\n(Feature coming soon!)');
+            closeSubmitModal();
+            event.target.reset();
+        }
+
+        // ========================================
+        // ADMIN ATHLETES LOADING
+        // ========================================
+        function loadAdminAthletes() {
+            const adminAthletes = JSON.parse(localStorage.getItem('impactZonePublicAthletes')) || [];
+            
+            if (adminAthletes.length === 0) {
+                return; // No admin athletes to display
+            }
+            
+            // Add admin athletes to the appropriate categories
+            adminAthletes.forEach(athlete => {
+                // Determine category based on athlete data or default to skateboarding
+                const category = athlete.category ? athlete.category.toLowerCase().replace(' ', '') : 'skateboarding';
+                
+                if (!realAthletesData[category]) {
+                    realAthletesData[category] = [];
+                }
+                
+                // Add admin athlete to the data structure
+                realAthletesData[category].push({
+                    id: athlete.id,
+                    name: athlete.name,
+                    nickname: `"${athlete.nickname}"`,
+                    country: athlete.country,
+                    category: athlete.category || 'ADMIN',
+                    categoryColor: 'orange',
+                    photo: 'http://static.photos/sport/1024x576/31', // Default photo
+                    stats: {
+                        runs: athlete.stats?.runs || 0,
+                        topSpeed: athlete.stats?.topSpeed || 0,
+                        points: athlete.stats?.points || 0,
+                        yearsActive: athlete.stats?.yearsActive || 0,
+                        worldRank: athlete.stats?.worldRank || 999
+                    },
+                    bio: athlete.bio || 'Admin-added athlete',
+                    achievements: [
+                        { title: 'Admin Added', year: '2024', type: 'Recognition' }
+                    ],
+                    recentRuns: [
+                        { location: 'Admin Event', speed: 0, date: '2024-01-01', rating: 'New' }
+                    ],
+                    videos: [],
+                    social: {}
+                });
+            });
+        }
+
+        // Initialize everything on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            loadAdminAthletes(); // Load admin athletes first
+            initVantaBackground();
+            feather.replace();
+            // Load skateboarding athletes by default
+            showAthletesByCategory('skateboarding');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaslod Media | Events</title>
+    <link rel="icon" type="image/jpeg" href="images/kaslod.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap');
+        .gradient-text {
+            background: linear-gradient(45deg, #f97316, #ef4444, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Enhanced Navbar Styles */
+        .navbar-link {
+            position: relative;
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        
+        .navbar-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(239, 68, 68, 0.1));
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .navbar-link:hover::before {
+            opacity: 1;
+        }
+        
+        .navbar-link:hover {
+            transform: translateY(-2px);
+            color: #f97316;
+        }
+        
+        .navbar-link.active {
+            background: linear-gradient(135deg, #f97316, #ef4444);
+            color: white;
+        }
+        
+        .navbar-link.active::before {
+            opacity: 0;
+        }
+        
+        .navbar-link.active:hover {
+            transform: translateY(-2px);
+        }
+        
+        .admin-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+        
+        .logout-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        }
+        
+        .navbar-logo {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .mobile-menu-btn {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(239, 68, 68, 0.1));
+            border: 2px solid rgba(249, 115, 22, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(239, 68, 68, 0.2));
+            border-color: rgba(249, 115, 22, 0.5);
+            transform: scale(1.05);
+        }
+        .event-card {
+            transition: all 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+        .event-card img {
+            transition: none;
+            transform: none;
+        }
+        .event-card:hover img {
+            transform: none;
+            scale: 1;
+        }
+        /* Event Modal Styles */
+        .event-modal {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .event-modal-content {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #f97316, #ef4444);
+            height: 8px;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .spot-counter {
+            background: linear-gradient(45deg, #f97316, #ef4444);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .instructor-card {
+            background: linear-gradient(135deg, #374151, #1f2937);
+            border: 1px solid #4b5563;
+            transition: all 0.3s ease;
+        }
+        .instructor-card:hover {
+            transform: translateY(-2px);
+            border-color: #f97316;
+        }
+        .form-input {
+            background: #374151;
+            border: 1px solid #4b5563;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            border-color: #f97316;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
+        .success-message {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-['Montserrat'] overflow-x-hidden">
+    <div id="vanta-bg" class="fixed inset-0 -z-10 opacity-20"></div>
+    
+    <!-- Bagong Navigation -->
+    <nav class="fixed w-full z-50 bg-gray-900/90 backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="kaslod.html" class="flex items-center space-x-2 navbar-logo">
+                        <img src="images/kaslod.jpg" alt="Kaslod Media Logo" class="h-10 w-auto rounded-lg">
+                        <span class="text-2xl font-bold font-['Bebas+Neue'] tracking-wider gradient-text">KASLOD MEDIA</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="kaslod.html" class="navbar-link">Highlights</a>
+                    <a href="impact_athletes.html" class="navbar-link">Athletes</a>
+                    <a href="impact_events.html" class="navbar-link active">Events</a>
+                    <a href="impact_gear.html" class="navbar-link">Gear</a>
+                    <a href="admin_login.html" class="admin-btn">
+                        Login
+                    </a>
+                    <button onclick="openSubmitModal()" class="navbar-link">
+                        Submit Clip
+                    </button>
+                </div>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 mobile-menu-btn">
+                    <i data-feather="menu"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-7xl font-bold font-['Bebas+Neue'] tracking-wide mb-6">
+                    <span class="gradient-text">UPCOMING</span><br>
+                    <span class="text-white">EVENTS</span>
+                </h1>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Join the global action sports community at these epic competitions, meetups, and workshops across all extreme sports.
+                </p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex justify-center space-x-4 mb-12 flex-wrap gap-2">
+                <button onclick="filterEvents('all')" class="event-filter-btn active px-6 py-2 rounded-md bg-orange-500 text-white font-medium transition">
+                    All Events
+                </button>
+                <button onclick="filterEvents('competition')" class="event-filter-btn px-6 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium transition">
+                    Competitions
+                </button>
+                <button onclick="filterEvents('meetup')" class="event-filter-btn px-6 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium transition">
+                    Meetups
+                </button>
+                <button onclick="filterEvents('workshop')" class="event-filter-btn px-6 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium transition">
+                    Workshops
+                </button>
+            </div>
+
+            <!-- Featured Event -->
+            <div class="bg-gradient-to-r from-orange-500/20 to-pink-500/20 rounded-xl p-8 mb-12 border border-orange-500/30">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <span class="bg-orange-500 text-xs px-3 py-1 rounded-full font-bold inline-block mb-4">FEATURED</span>
+                        <h2 class="text-4xl font-bold font-['Bebas+Neue'] mb-4">Action Sports World Championship 2024</h2>
+                        <p class="text-gray-300 mb-6">The biggest multi-sport action sports event of the year featuring the world's top athletes competing across skateboarding, BMX, parkour, motocross, and more.</p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="flex items-center">
+                                <i data-feather="calendar" class="w-5 h-5 mr-2 text-orange-400"></i>
+                                <span>August 15-18, 2024</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i data-feather="map-pin" class="w-5 h-5 mr-2 text-orange-400"></i>
+                                <span>Interlaken, Switzerland</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i data-feather="users" class="w-5 h-5 mr-2 text-orange-400"></i>
+                                <span>200+ Athletes</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i data-feather="award" class="w-5 h-5 mr-2 text-orange-400"></i>
+                                <span>$50,000 Prize Pool</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button onclick="registerForEvent('Action Sports World Championship 2024')" class="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-md font-medium transition transform hover:scale-105">
+                                Register Now
+                            </button>
+                            <button onclick="learnMoreFeaturedEvent()" class="border border-orange-500 text-orange-400 hover:bg-orange-500/10 px-6 py-3 rounded-md font-medium transition">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <img src="http://static.photos/sport/1024x576/14" alt="Featured Event" class="rounded-xl w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent rounded-xl"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Created Events -->
+            <div id="admin-events-section" class="mb-12">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold font-['Bebas+Neue']">
+                        <span class="gradient-text">ADMIN CREATED</span> <span class="text-white">EVENTS</span>
+                    </h3>
+                    <button onclick="loadAdminEvents()" class="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-md font-medium transition flex items-center">
+                        <i data-feather="refresh-cw" class="w-4 h-4 mr-2"></i>
+                        Refresh
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="adminEventsGrid">
+                    <!-- Admin events will be populated here -->
+                </div>
+            </div>
+
+            <!-- Events Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="eventsGrid">
+                <!-- Event 1 -->
+                <div class="event-card bg-gray-800 rounded-xl overflow-hidden" data-category="competition">
+                    <div class="relative h-48">
+                        <img src="http://static.photos/sport/1024x576/15" alt="Event" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-red-500 text-xs px-3 py-1 rounded-full font-bold">COMPETITION</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Pacific Coast Speed Series</h3>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="calendar" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                June 22-23, 2024
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="map-pin" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                Malibu, California
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="users" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                80 Riders Expected
+                            </div>
+                        </div>
+                        <button onclick="viewEventDetails('Pacific Coast Speed Series')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="event-card bg-gray-800 rounded-xl overflow-hidden" data-category="meetup">
+                    <div class="relative h-48">
+                        <img src="http://static.photos/sport/1024x576/16" alt="Event" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-blue-500 text-xs px-3 py-1 rounded-full font-bold">MEETUP</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Barcelona Street Ride</h3>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="calendar" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                July 5, 2024
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="map-pin" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                Barcelona, Spain
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="users" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                Open to All
+                            </div>
+                        </div>
+                        <button onclick="joinMeetup('Barcelona Street Ride')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            Join Meetup
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="event-card bg-gray-800 rounded-xl overflow-hidden" data-category="workshop">
+                    <div class="relative h-48">
+                        <img src="http://static.photos/sport/1024x576/17" alt="Event" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-green-500 text-xs px-3 py-1 rounded-full font-bold">WORKSHOP</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Slide Techniques Masterclass</h3>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="calendar" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                July 12, 2024
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="map-pin" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                Portland, Oregon
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="users" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                Limited to 25
+                            </div>
+                        </div>
+                        <button onclick="bookWorkshopSpot('Slide Techniques Masterclass')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            Book Spot
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 4 -->
+                <div class="event-card bg-gray-800 rounded-xl overflow-hidden" data-category="competition">
+                    <div class="relative h-48">
+                        <img src="http://static.photos/sport/1024x576/18" alt="Event" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-red-500 text-xs px-3 py-1 rounded-full font-bold">COMPETITION</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Tokyo Speed Challenge</h3>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="calendar" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                August 3-5, 2024
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="map-pin" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                Tokyo, Japan
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="users" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                60 Riders Expected
+                            </div>
+                        </div>
+                        <button onclick="viewEventDetails('Tokyo Speed Challenge')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 5 -->
+                <div class="event-card bg-gray-800 rounded-xl overflow-hidden" data-category="meetup">
+                    <div class="relative h-48">
+                        <img src="http://static.photos/sport/1024x576/19" alt="Event" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-blue-500 text-xs px-3 py-1 rounded-full font-bold">MEETUP</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">UK Downhill Social</h3>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="calendar" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                August 10, 2024
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="map-pin" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                Brighton, UK
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="users" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                Open to All
+                            </div>
+                        </div>
+                        <button onclick="joinMeetup('UK Downhill Social')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            Join Meetup
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event 6 -->
+                <div class="event-card bg-gray-800 rounded-xl overflow-hidden" data-category="workshop">
+                    <div class="relative h-48">
+                        <img src="http://static.photos/sport/1024x576/20" alt="Event" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                        <span class="absolute top-4 right-4 bg-green-500 text-xs px-3 py-1 rounded-full font-bold">WORKSHOP</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Safety & Speed Workshop</h3>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="calendar" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                September 1, 2024
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="map-pin" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                São Paulo, Brazil
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="users" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                Limited to 30
+                            </div>
+                        </div>
+                        <button onclick="bookWorkshopSpot('Safety & Speed Workshop')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                            Book Spot
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Details Modal -->
+    <div id="eventDetailsModal" class="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 hidden items-center justify-center p-4 event-modal" onclick="closeEventModal(event)">
+        <div class="event-modal-content relative w-full max-w-5xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <button onclick="closeEventModal()" class="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors z-10">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                <!-- Event Header -->
+                <div id="event-header" class="relative h-80 bg-gradient-to-br from-orange-500/20 to-pink-500/20">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <span id="event-category-badge" class="bg-red-500 text-xs px-3 py-1 rounded-full font-bold inline-block mb-4">COMPETITION</span>
+                        <h2 id="event-title" class="text-4xl font-bold font-['Bebas+Neue'] mb-2"></h2>
+                        <div class="flex items-center space-x-6 text-gray-300">
+                            <div class="flex items-center">
+                                <i data-feather="calendar" class="w-5 h-5 mr-2 text-orange-400"></i>
+                                <span id="event-date"></span>
+                            </div>
+                            <div class="flex items-center">
+                                <i data-feather="map-pin" class="w-5 h-5 mr-2 text-orange-400"></i>
+                                <span id="event-location"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Content -->
+                <div class="p-8">
+                    <!-- Description -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">EVENT DETAILS</h3>
+                        <p id="event-description" class="text-gray-300 leading-relaxed mb-6"></p>
+                        
+                        <!-- Competition Format -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-gray-700/50 rounded-lg p-4">
+                                <h4 class="font-bold text-orange-400 mb-2">Competition Format</h4>
+                                <p id="competition-format" class="text-gray-300 text-sm"></p>
+                            </div>
+                            <div class="bg-gray-700/50 rounded-lg p-4">
+                                <h4 class="font-bold text-orange-400 mb-2">Requirements</h4>
+                                <p id="event-requirements" class="text-gray-300 text-sm"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prize Information -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">PRIZE INFORMATION</h3>
+                        <div id="prize-breakdown" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Prize info will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Registration Info -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">REGISTRATION</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gray-700/50 rounded-lg p-4">
+                                <h4 class="font-bold text-orange-400 mb-2">Registration Fee</h4>
+                                <p id="registration-fee" class="text-gray-300"></p>
+                            </div>
+                            <div class="bg-gray-700/50 rounded-lg p-4">
+                                <h4 class="font-bold text-orange-400 mb-2">Deadline</h4>
+                                <p id="registration-deadline" class="text-gray-300"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="registerForEventFromModal()" class="bg-orange-500 hover:bg-orange-600 px-8 py-3 rounded-md font-medium transition transform hover:scale-105">
+                            Register Now
+                        </button>
+                        <button onclick="shareEvent()" class="border border-orange-500 text-orange-400 hover:bg-orange-500/10 px-8 py-3 rounded-md font-medium transition">
+                            Share Event
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meetup Modal -->
+    <div id="meetupModal" class="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 hidden items-center justify-center p-4 event-modal" onclick="closeEventModal(event)">
+        <div class="event-modal-content relative w-full max-w-4xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <button onclick="closeEventModal()" class="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors z-10">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                <!-- Meetup Header -->
+                <div id="meetup-header" class="relative h-64 bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <span class="bg-blue-500 text-xs px-3 py-1 rounded-full font-bold inline-block mb-4">MEETUP</span>
+                        <h2 id="meetup-title" class="text-3xl font-bold font-['Bebas+Neue'] mb-2"></h2>
+                        <div class="flex items-center space-x-6 text-gray-300">
+                            <div class="flex items-center">
+                                <i data-feather="calendar" class="w-5 h-5 mr-2 text-blue-400"></i>
+                                <span id="meetup-date"></span>
+                            </div>
+                            <div class="flex items-center">
+                                <i data-feather="map-pin" class="w-5 h-5 mr-2 text-blue-400"></i>
+                                <span id="meetup-location"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Meetup Content -->
+                <div class="p-8">
+                    <!-- Description -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">ABOUT THIS MEETUP</h3>
+                        <p id="meetup-description" class="text-gray-300 leading-relaxed mb-6"></p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-gray-700/50 rounded-lg p-4">
+                                <h4 class="font-bold text-blue-400 mb-2">Meeting Point</h4>
+                                <p id="meeting-point" class="text-gray-300 text-sm"></p>
+                            </div>
+                            <div class="bg-gray-700/50 rounded-lg p-4">
+                                <h4 class="font-bold text-blue-400 mb-2">What to Bring</h4>
+                                <p id="what-to-bring" class="text-gray-300 text-sm"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attendees -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">WHO'S GOING</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-gray-300"><span id="attendee-count">0</span> people confirmed</span>
+                            <span class="text-sm text-gray-400">Skill level: <span id="skill-level">All levels</span></span>
+                        </div>
+                        <div id="attendee-avatars" class="flex space-x-2 mb-6">
+                            <!-- Attendee avatars will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- RSVP Form -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">RSVP</h3>
+                        <form id="rsvp-form" onsubmit="handleRSVP(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Full Name</label>
+                                    <input type="text" required class="w-full form-input rounded-md px-4 py-2 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Email</label>
+                                    <input type="email" required class="w-full form-input rounded-md px-4 py-2 focus:outline-none">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Phone Number</label>
+                                    <input type="tel" class="w-full form-input rounded-md px-4 py-2 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Skill Level</label>
+                                    <select class="w-full form-input rounded-md px-4 py-2 focus:outline-none">
+                                        <option value="beginner">Beginner</option>
+                                        <option value="intermediate">Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 py-3 rounded-md font-medium transition">
+                                Confirm RSVP
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workshop Modal -->
+    <div id="workshopModal" class="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 hidden items-center justify-center p-4 event-modal" onclick="closeEventModal(event)">
+        <div class="event-modal-content relative w-full max-w-5xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <button onclick="closeEventModal()" class="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors z-10">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                <!-- Workshop Header -->
+                <div id="workshop-header" class="relative h-80 bg-gradient-to-br from-green-500/20 to-emerald-500/20">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <span class="bg-green-500 text-xs px-3 py-1 rounded-full font-bold inline-block mb-4">WORKSHOP</span>
+                        <h2 id="workshop-title" class="text-4xl font-bold font-['Bebas+Neue'] mb-2"></h2>
+                        <div class="flex items-center space-x-6 text-gray-300">
+                            <div class="flex items-center">
+                                <i data-feather="calendar" class="w-5 h-5 mr-2 text-green-400"></i>
+                                <span id="workshop-date"></span>
+                            </div>
+                            <div class="flex items-center">
+                                <i data-feather="map-pin" class="w-5 h-5 mr-2 text-green-400"></i>
+                                <span id="workshop-location"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workshop Content -->
+                <div class="p-8">
+                    <!-- Instructor -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">INSTRUCTOR</h3>
+                        <div id="instructor-info" class="instructor-card rounded-lg p-6">
+                            <!-- Instructor info will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Workshop Details -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">WORKSHOP DETAILS</h3>
+                        <p id="workshop-description" class="text-gray-300 leading-relaxed mb-6"></p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-gray-700/50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-400 mb-2">What You'll Learn</h4>
+                                <ul id="workshop-curriculum" class="text-gray-300 text-sm space-y-1">
+                                    <!-- Curriculum will be populated here -->
+                                </ul>
+                            </div>
+                            <div class="bg-gray-700/50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-400 mb-2">Requirements</h4>
+                                <p id="workshop-requirements" class="text-gray-300 text-sm"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spots Available -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">AVAILABILITY</h3>
+                        <div class="bg-gray-700/50 rounded-lg p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-gray-300">Spots Available</span>
+                                <span id="spots-available" class="spot-counter">5 spots left</span>
+                            </div>
+                            <div class="w-full bg-gray-600 rounded-full h-2 mb-4">
+                                <div id="spots-progress" class="progress-bar h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-400">
+                                <span>0</span>
+                                <span id="total-spots">25</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pricing -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">PRICING</h3>
+                        <div class="bg-gray-700/50 rounded-lg p-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-300">Workshop Fee</span>
+                                <span id="workshop-price" class="text-2xl font-bold text-green-400">$89</span>
+                            </div>
+                            <p class="text-sm text-gray-400">Includes: Equipment, materials, certificate</p>
+                        </div>
+                    </div>
+
+                    <!-- Booking Form -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold font-['Bebas+Neue'] mb-4 gradient-text">BOOK YOUR SPOT</h3>
+                        <form id="booking-form" onsubmit="handleBooking(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Full Name</label>
+                                    <input type="text" required class="w-full form-input rounded-md px-4 py-2 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Email</label>
+                                    <input type="email" required class="w-full form-input rounded-md px-4 py-2 focus:outline-none">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Phone Number</label>
+                                    <input type="tel" class="w-full form-input rounded-md px-4 py-2 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Skill Level</label>
+                                    <select class="w-full form-input rounded-md px-4 py-2 focus:outline-none">
+                                        <option value="beginner">Beginner</option>
+                                        <option value="intermediate">Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Payment Method</label>
+                                <select class="w-full form-input rounded-md px-4 py-2 focus:outline-none">
+                                    <option value="card">Credit/Debit Card</option>
+                                    <option value="paypal">PayPal</option>
+                                    <option value="bank">Bank Transfer</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 py-3 rounded-md font-medium transition">
+                                Confirm Booking
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Modal -->
+    <div id="submitModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-xl max-w-md w-full p-8 relative">
+            <button onclick="closeSubmitModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i data-feather="x"></i>
+            </button>
+            <h2 class="text-3xl font-bold font-['Bebas+Neue'] gradient-text mb-4">Submit Your Clip</h2>
+            <form onsubmit="handleSubmitClip(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Clip Title</label>
+                    <input type="text" class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Video URL</label>
+                    <input type="url" class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Location</label>
+                    <input type="text" class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Description</label>
+                    <textarea rows="3" class="w-full bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 py-3 rounded-md font-medium transition">
+                    Submit Clip
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800/50 border-t border-gray-700 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-gray-500 text-sm">© 2023 Kaslod Media. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========================================
+        // ADMIN LOGIN SESSION CHECK
+        // ========================================
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('impactZoneAdminLoggedIn');
+            if (isLoggedIn === 'true') {
+                // Update navbar to show admin state
+                updateNavbarForAdmin();
+            }
+        }
+
+        function updateNavbarForAdmin() {
+            const loginBtn = document.querySelector('a[href="admin_login.html"]');
+            if (loginBtn) {
+                loginBtn.textContent = 'Admin Dashboard';
+                loginBtn.href = 'admin_dashboard.html';
+                loginBtn.className = 'admin-btn';
+                
+                // Add logout button
+                const logoutBtn = document.createElement('button');
+                logoutBtn.textContent = 'Logout';
+                logoutBtn.className = 'logout-btn';
+                logoutBtn.onclick = logout;
+                
+                loginBtn.parentNode.insertBefore(logoutBtn, loginBtn.nextSibling);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('impactZoneAdminLoggedIn');
+            localStorage.removeItem('impactZoneAdminUser');
+            window.location.reload();
+        }
+
+        // ========================================
+        // COMPREHENSIVE EVENT DATA STRUCTURE
+        // ========================================
+        const eventsData = {
+            'Action Sports World Championship 2024': {
+                type: 'competition',
+                category: 'COMPETITION',
+                categoryColor: 'red',
+                title: 'Action Sports World Championship 2024',
+                date: 'August 15-18, 2024',
+                location: 'Interlaken, Switzerland',
+                image: 'http://static.photos/sport/1024x576/14',
+                description: 'The biggest multi-sport action sports event of the year featuring the world\'s top athletes competing across skateboarding, BMX, parkour, motocross, and more. This prestigious championship brings together the best of the best for four days of intense competition and celebration of extreme sports.',
+                competitionFormat: 'Multi-sport championship with individual competitions for each sport plus combined events. Each sport has qualifying rounds, semifinals, and finals.',
+                requirements: 'Professional athletes only, minimum age 18, valid competition license required, full protective gear mandatory.',
+                prizes: [
+                    { position: 'Overall Champion', amount: '$25,000', description: 'Championship Trophy + Cash Prize' },
+                    { position: '2nd Place', amount: '$15,000', description: 'Silver Medal + Cash Prize' },
+                    { position: '3rd Place', amount: '$10,000', description: 'Bronze Medal + Cash Prize' }
+                ],
+                registrationFee: '$500 per athlete',
+                registrationDeadline: 'July 30, 2024',
+                pastWinners: [
+                    { year: '2023', winner: 'Alex "The Hawk" Johnson', sport: 'Skateboarding' },
+                    { year: '2022', winner: 'Marcus Chen', sport: 'BMX' },
+                    { year: '2021', winner: 'Jamie Rivers', sport: 'Parkour' }
+                ]
+            },
+            'Pacific Coast Speed Series': {
+                type: 'competition',
+                category: 'COMPETITION',
+                categoryColor: 'red',
+                title: 'Pacific Coast Speed Series',
+                date: 'June 22-23, 2024',
+                location: 'Malibu, California',
+                image: 'http://static.photos/sport/1024x576/15',
+                description: 'The Pacific Coast Speed Series is one of the most prestigious downhill skateboarding competitions on the West Coast. Featuring challenging coastal routes with breathtaking ocean views, this event attracts the world\'s top riders competing for glory and substantial prize money.',
+                competitionFormat: 'Multi-stage elimination format with qualifying rounds, semifinals, and finals. Each rider gets 3 runs with the best time counting.',
+                requirements: 'Minimum age 16, valid ID required, full protective gear mandatory (helmet, knee pads, elbow pads, gloves).',
+                prizes: [
+                    { position: '1st Place', amount: '$5,000', description: 'Championship Trophy + Cash Prize' },
+                    { position: '2nd Place', amount: '$3,000', description: 'Silver Medal + Cash Prize' },
+                    { position: '3rd Place', amount: '$2,000', description: 'Bronze Medal + Cash Prize' }
+                ],
+                registrationFee: '$150 per rider',
+                registrationDeadline: 'June 15, 2024',
+                pastWinners: [
+                    { year: '2023', winner: 'Alex "The Hawk" Johnson', time: '2:34.567' },
+                    { year: '2022', winner: 'Maria "Gravity" Santos', time: '2:35.123' },
+                    { year: '2021', winner: 'Yuki "Kamikaze" Tanaka', time: '2:33.890' }
+                ]
+            },
+            'Barcelona Street Ride': {
+                type: 'meetup',
+                category: 'MEETUP',
+                categoryColor: 'blue',
+                title: 'Barcelona Street Ride',
+                date: 'July 5, 2024',
+                location: 'Barcelona, Spain',
+                image: 'http://static.photos/sport/1024x576/16',
+                description: 'Join us for an epic street ride through the beautiful streets of Barcelona! This casual meetup is perfect for riders of all skill levels who want to explore the city\'s best spots while meeting fellow skateboarders.',
+                meetingPoint: 'Plaça de Catalunya, Barcelona - Meet at the fountain at 10:00 AM',
+                whatToBring: 'Skateboard, helmet (recommended), water bottle, comfortable clothes, and a positive attitude!',
+                skillLevel: 'All levels welcome',
+                attendees: 23,
+                organizer: 'Barcelona Skate Crew',
+                contact: 'barcelonaskate@email.com'
+            },
+            'Slide Techniques Masterclass': {
+                type: 'workshop',
+                category: 'WORKSHOP',
+                categoryColor: 'green',
+                title: 'Slide Techniques Masterclass',
+                date: 'July 12, 2024',
+                location: 'Portland, Oregon',
+                image: 'http://static.photos/sport/1024x576/17',
+                description: 'Master the art of sliding with our comprehensive workshop led by professional instructors. Learn proper technique, safety protocols, and advanced sliding maneuvers in a controlled environment.',
+                instructor: {
+                    name: 'Mike "Slide King" Rodriguez',
+                    credentials: 'Professional downhill skateboarder with 10+ years experience',
+                    achievements: ['3x World Slide Champion', 'X Games Gold Medalist', 'Safety Instructor Certified'],
+                    photo: 'http://static.photos/sport/1024x576/21'
+                },
+                curriculum: [
+                    'Basic slide positioning and stance',
+                    'Speed control techniques',
+                    'Emergency stopping methods',
+                    'Advanced slide combinations',
+                    'Safety gear and maintenance'
+                ],
+                requirements: 'Intermediate skill level, own skateboard, full protective gear required',
+                spotsAvailable: 5,
+                totalSpots: 25,
+                price: '$89',
+                includes: 'Equipment, materials, certificate'
+            },
+            'Tokyo Speed Challenge': {
+                type: 'competition',
+                category: 'COMPETITION',
+                categoryColor: 'red',
+                title: 'Tokyo Speed Challenge',
+                date: 'August 3-5, 2024',
+                location: 'Tokyo, Japan',
+                image: 'http://static.photos/sport/1024x576/18',
+                description: 'Experience the thrill of downhill skateboarding in the heart of Tokyo! This challenging urban course combines technical sections with high-speed straights, testing every aspect of a rider\'s skill.',
+                competitionFormat: 'Time trial format with individual runs. Each rider gets 2 practice runs and 3 official runs.',
+                requirements: 'Minimum age 18, international riders welcome, full protective gear mandatory.',
+                prizes: [
+                    { position: '1st Place', amount: '$8,000', description: 'Championship Trophy + Cash Prize' },
+                    { position: '2nd Place', amount: '$5,000', description: 'Silver Medal + Cash Prize' },
+                    { position: '3rd Place', amount: '$3,000', description: 'Bronze Medal + Cash Prize' }
+                ],
+                registrationFee: '$200 per rider',
+                registrationDeadline: 'July 25, 2024',
+                pastWinners: [
+                    { year: '2023', winner: 'Yuki "Kamikaze" Tanaka', time: '1:45.234' },
+                    { year: '2022', winner: 'Alex "The Hawk" Johnson', time: '1:46.567' },
+                    { year: '2021', winner: 'Maria "Gravity" Santos', time: '1:47.123' }
+                ]
+            },
+            'UK Downhill Social': {
+                type: 'meetup',
+                category: 'MEETUP',
+                categoryColor: 'blue',
+                title: 'UK Downhill Social',
+                date: 'August 10, 2024',
+                location: 'Brighton, UK',
+                image: 'http://static.photos/sport/1024x576/19',
+                description: 'Join the UK downhill community for a fun-filled day of riding and socializing! This meetup is perfect for connecting with local riders and exploring Brighton\'s scenic coastal routes.',
+                meetingPoint: 'Brighton Pier, Brighton - Meet at the entrance at 9:30 AM',
+                whatToBring: 'Skateboard, helmet, knee pads, water bottle, and snacks for the day',
+                skillLevel: 'Beginner to intermediate',
+                attendees: 18,
+                organizer: 'UK Downhill Collective',
+                contact: 'ukdownhill@email.com'
+            },
+            'Safety & Speed Workshop': {
+                type: 'workshop',
+                category: 'WORKSHOP',
+                categoryColor: 'green',
+                title: 'Safety & Speed Workshop',
+                date: 'September 1, 2024',
+                location: 'São Paulo, Brazil',
+                image: 'http://static.photos/sport/1024x576/20',
+                description: 'Learn essential safety techniques and speed management skills from professional instructors. This workshop focuses on building confidence while maintaining safety at high speeds.',
+                instructor: {
+                    name: 'Carlos "Safety First" Silva',
+                    credentials: 'Certified Safety Instructor with 15+ years experience',
+                    achievements: ['Brazilian Safety Champion', 'International Instructor', 'Emergency Response Certified'],
+                    photo: 'http://static.photos/sport/1024x576/22'
+                },
+                curriculum: [
+                    'Safety gear selection and fitting',
+                    'Speed control fundamentals',
+                    'Emergency braking techniques',
+                    'Risk assessment and management',
+                    'Injury prevention strategies'
+                ],
+                requirements: 'All skill levels welcome, basic skateboarding experience recommended',
+                spotsAvailable: 8,
+                totalSpots: 30,
+                price: '$75',
+                includes: 'Safety gear, instruction manual, completion certificate'
+            }
+        };
+
+        // ========================================
+        // EVENT MODAL FUNCTIONS
+        // ========================================
+        function viewEventDetails(eventName) {
+            const event = eventsData[eventName];
+            if (!event) {
+                console.error('Event not found:', eventName);
+                return;
+            }
+
+            populateEventDetailsModal(event);
+            
+            const modal = document.getElementById('eventDetailsModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => feather.replace(), 100);
+        }
+
+        function populateEventDetailsModal(event) {
+            // Basic info
+            document.getElementById('event-category-badge').textContent = event.category;
+            document.getElementById('event-category-badge').className = `bg-${event.categoryColor}-500 text-xs px-3 py-1 rounded-full font-bold inline-block mb-4`;
+            document.getElementById('event-title').textContent = event.title;
+            document.getElementById('event-date').textContent = event.date;
+            document.getElementById('event-location').textContent = event.location;
+            document.getElementById('event-description').textContent = event.description;
+            document.getElementById('competition-format').textContent = event.competitionFormat;
+            document.getElementById('event-requirements').textContent = event.requirements;
+            document.getElementById('registration-fee').textContent = event.registrationFee;
+            document.getElementById('registration-deadline').textContent = event.registrationDeadline;
+
+            // Prize breakdown
+            const prizeContainer = document.getElementById('prize-breakdown');
+            prizeContainer.innerHTML = event.prizes.map(prize => `
+                <div class="bg-gray-700/50 rounded-lg p-4 text-center">
+                    <h4 class="font-bold text-orange-400 mb-2">${prize.position}</h4>
+                    <div class="text-2xl font-bold text-white mb-1">${prize.amount}</div>
+                    <p class="text-sm text-gray-400">${prize.description}</p>
+                </div>
+            `).join('');
+        }
+
+        function joinMeetup(eventName) {
+            const event = eventsData[eventName];
+            if (!event) {
+                console.error('Event not found:', eventName);
+                return;
+            }
+
+            populateMeetupModal(event);
+            
+            const modal = document.getElementById('meetupModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => feather.replace(), 100);
+        }
+
+        function populateMeetupModal(event) {
+            // Basic info
+            document.getElementById('meetup-title').textContent = event.title;
+            document.getElementById('meetup-date').textContent = event.date;
+            document.getElementById('meetup-location').textContent = event.location;
+            document.getElementById('meetup-description').textContent = event.description;
+            document.getElementById('meeting-point').textContent = event.meetingPoint;
+            document.getElementById('what-to-bring').textContent = event.whatToBring;
+            document.getElementById('attendee-count').textContent = event.attendees;
+            document.getElementById('skill-level').textContent = event.skillLevel;
+
+            // Generate attendee avatars
+            const avatarContainer = document.getElementById('attendee-avatars');
+            avatarContainer.innerHTML = Array.from({length: Math.min(event.attendees, 8)}, (_, i) => `
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-pink-400 flex items-center justify-center text-white font-bold text-sm">
+                    ${String.fromCharCode(65 + i)}
+                </div>
+            `).join('');
+        }
+
+        function bookWorkshopSpot(eventName) {
+            const event = eventsData[eventName];
+            if (!event) {
+                console.error('Event not found:', eventName);
+                return;
+            }
+
+            populateWorkshopModal(event);
+            
+            const modal = document.getElementById('workshopModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => feather.replace(), 100);
+        }
+
+        function populateWorkshopModal(event) {
+            // Basic info
+            document.getElementById('workshop-title').textContent = event.title;
+            document.getElementById('workshop-date').textContent = event.date;
+            document.getElementById('workshop-location').textContent = event.location;
+            document.getElementById('workshop-description').textContent = event.description;
+            document.getElementById('workshop-requirements').textContent = event.requirements;
+            document.getElementById('spots-available').textContent = `${event.spotsAvailable} spots left`;
+            document.getElementById('total-spots').textContent = event.totalSpots;
+            document.getElementById('workshop-price').textContent = event.price;
+
+            // Update progress bar
+            const progressPercentage = ((event.totalSpots - event.spotsAvailable) / event.totalSpots) * 100;
+            document.getElementById('spots-progress').style.width = `${progressPercentage}%`;
+
+            // Instructor info
+            const instructorContainer = document.getElementById('instructor-info');
+            instructorContainer.innerHTML = `
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 rounded-full overflow-hidden">
+                        <img src="${event.instructor.photo}" alt="${event.instructor.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-green-400 mb-1">${event.instructor.name}</h4>
+                        <p class="text-gray-300 text-sm mb-2">${event.instructor.credentials}</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${event.instructor.achievements.map(achievement => `
+                                <span class="text-xs px-2 py-1 bg-green-500/20 text-green-300 rounded-full">${achievement}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Curriculum
+            const curriculumContainer = document.getElementById('workshop-curriculum');
+            curriculumContainer.innerHTML = event.curriculum.map(item => `
+                <li class="flex items-center">
+                    <i data-feather="check" class="w-4 h-4 mr-2 text-green-400"></i>
+                    ${item}
+                </li>
+            `).join('');
+        }
+
+        function closeEventModal(event) {
+            if (event && event.target !== event.currentTarget && !event.target.closest('button[onclick*="closeEventModal"]')) {
+                return;
+            }
+            
+            const modals = ['eventDetailsModal', 'meetupModal', 'workshopModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+            document.body.style.overflow = 'auto';
+        }
+
+        function registerForEventFromModal() {
+            alert('Registration form would open here!\n(Feature coming soon!)');
+        }
+
+        function shareEvent() {
+            alert('Event shared successfully!\n(Feature coming soon!)');
+        }
+
+        function handleRSVP(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            // Show success message
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.innerHTML = `
+                <div class="flex items-center">
+                    <i data-feather="check-circle" class="w-6 h-6 mr-2"></i>
+                    <span>RSVP confirmed! You'll receive a confirmation email shortly.</span>
+                </div>
+            `;
+            form.appendChild(successDiv);
+            
+            // Reset form
+            form.reset();
+            
+            // Update attendee count
+            const currentCount = parseInt(document.getElementById('attendee-count').textContent);
+            document.getElementById('attendee-count').textContent = currentCount + 1;
+            
+            setTimeout(() => feather.replace(), 100);
+        }
+
+        function handleBooking(event) {
+            event.preventDefault();
+            const form = event.target;
+            
+            // Show success message
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.innerHTML = `
+                <div class="flex items-center">
+                    <i data-feather="check-circle" class="w-6 h-6 mr-2"></i>
+                    <span>Booking confirmed! Payment details will be sent to your email.</span>
+                </div>
+            `;
+            form.appendChild(successDiv);
+            
+            // Reset form
+            form.reset();
+            
+            // Update spots available
+            const spotsElement = document.getElementById('spots-available');
+            const currentSpots = parseInt(spotsElement.textContent.split(' ')[0]);
+            if (currentSpots > 1) {
+                spotsElement.textContent = `${currentSpots - 1} spots left`;
+                const progressPercentage = ((25 - (currentSpots - 1)) / 25) * 100;
+                document.getElementById('spots-progress').style.width = `${progressPercentage}%`;
+            } else {
+                spotsElement.textContent = 'Fully booked';
+                spotsElement.className = 'bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold';
+            }
+            
+            setTimeout(() => feather.replace(), 100);
+        }
+        function initVantaBackground() {
+            VANTA.WAVES({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0xff7b33,
+                shininess: 35.00,
+                waveHeight: 15.00,
+                waveSpeed: 0.75,
+                zoom: 0.85
+            });
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu) {
+                mobileMenu.classList.toggle('hidden');
+            }
+        }
+
+        // Filter events by category
+        function filterEvents(category) {
+            const cards = document.querySelectorAll('.event-card');
+            const buttons = document.querySelectorAll('.event-filter-btn');
+            
+            // Update button styles
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-orange-500', 'text-white');
+                btn.classList.add('bg-gray-800', 'text-gray-300');
+            });
+            
+            event.target.classList.add('active', 'bg-orange-500', 'text-white');
+            event.target.classList.remove('bg-gray-800', 'text-gray-300');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Submit Clip Modal
+        function openSubmitModal() {
+            const modal = document.getElementById('submitModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                feather.replace();
+            }
+        }
+
+        function closeSubmitModal() {
+            const modal = document.getElementById('submitModal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Event registration
+        function registerForEvent(eventName) {
+            viewEventDetails(eventName);
+        }
+
+        // Learn more about featured event
+        function learnMoreFeaturedEvent() {
+            viewEventDetails('Action Sports World Championship 2024');
+        }
+
+        // Submit event form
+        function handleSubmitClip(event) {
+            event.preventDefault();
+            alert('Clip submitted successfully!\n(Feature coming soon!)');
+            closeSubmitModal();
+            event.target.reset();
+        }
+
+        // ========================================
+        // ADMIN EVENTS LOADING
+        // ========================================
+        function loadAdminEvents() {
+            const adminEvents = JSON.parse(localStorage.getItem('impactZonePublicEvents')) || [];
+            const container = document.getElementById('adminEventsGrid');
+            const section = document.getElementById('admin-events-section');
+            
+            if (adminEvents.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+            
+            section.style.display = 'block';
+            
+            container.innerHTML = adminEvents.map(event => {
+                const typeColors = {
+                    'competition': 'bg-red-500',
+                    'meetup': 'bg-blue-500',
+                    'workshop': 'bg-green-500'
+                };
+                
+                const typeColor = typeColors[event.type] || 'bg-orange-500';
+                
+                return `
+                    <div class="event-card bg-gray-800 rounded-xl overflow-hidden" data-category="${event.type}">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="${event.image}" alt="${event.title}" class="w-full h-full object-cover" style="transition: none; transform: none;">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                            <span class="absolute top-4 right-4 ${typeColor} text-xs px-3 py-1 rounded-full font-bold">${event.type.toUpperCase()}</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">${event.title}</h3>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex items-center text-sm text-gray-300">
+                                    <i data-feather="calendar" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                    ${event.date}
+                                </div>
+                                <div class="flex items-center text-sm text-gray-300">
+                                    <i data-feather="map-pin" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                    ${event.location}
+                                </div>
+                                <div class="flex items-center text-sm text-gray-300">
+                                    <i data-feather="info" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                    ${event.description.substring(0, 100)}...
+                                </div>
+                            </div>
+                            <button onclick="viewAdminEventDetails('${event.id}')" class="w-full bg-orange-500 hover:bg-orange-600 py-2 rounded-md font-medium transition">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            feather.replace();
+        }
+
+        function viewAdminEventDetails(eventId) {
+            const adminEvents = JSON.parse(localStorage.getItem('impactZonePublicEvents')) || [];
+            const event = adminEvents.find(e => e.id === eventId);
+            
+            if (!event) {
+                alert('Event not found!');
+                return;
+            }
+            
+            // Create a simple event details modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-gray-800 rounded-xl max-w-2xl w-full p-8 relative">
+                    <button onclick="this.parentElement.parentElement.remove()" class="absolute top-4 right-4 text-white hover:text-orange-400">
+                        <i data-feather="x" class="w-6 h-6"></i>
+                    </button>
+                    <div class="mb-6">
+                        <img src="${event.image}" alt="${event.title}" class="w-full h-48 object-cover rounded-lg mb-4">
+                        <h2 class="text-3xl font-bold mb-2">${event.title}</h2>
+                        <div class="flex items-center space-x-4 text-gray-300 mb-4">
+                            <div class="flex items-center">
+                                <i data-feather="calendar" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                ${event.date}
+                            </div>
+                            <div class="flex items-center">
+                                <i data-feather="map-pin" class="w-4 h-4 mr-2 text-orange-400"></i>
+                                ${event.location}
+                            </div>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">${event.description}</p>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="w-full bg-orange-500 hover:bg-orange-600 py-3 rounded-md font-medium transition">
+                        Close
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            feather.replace();
+        }
+
+        // ========================================
+        // NOTIFICATION SYSTEM
+        // ========================================
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 
+                'bg-blue-500'
+            } text-white`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Check for new events periodically
+        function checkForNewEvents() {
+            const lastEventCount = parseInt(localStorage.getItem('lastAdminEventCount') || '0');
+            const currentEvents = JSON.parse(localStorage.getItem('impactZonePublicEvents')) || [];
+            
+            if (currentEvents.length > lastEventCount) {
+                showNotification(`New event added: ${currentEvents[currentEvents.length - 1].title}`, 'success');
+                loadAdminEvents(); // Refresh the display
+            }
+            
+            localStorage.setItem('lastAdminEventCount', currentEvents.length.toString());
+        }
+
+        // Initialize everything on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            loadAdminEvents();
+            initVantaBackground();
+            feather.replace();
+            
+            // Check for new events every 5 seconds
+            setInterval(checkForNewEvents, 5000);
+        });
+    </script>
+</body>
+</html>
+                        
